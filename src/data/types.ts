@@ -40,16 +40,15 @@ export interface PostDataType {
   id: string | number;
   author: AuthorType;
   date: string;
-  href: Route<string>;
+  href: Route;
   categories: TaxonomyType[];
   title: string;
-  featuredImage: StaticImageData | string;
-  desc?: string;
-  commentCount: number;
-  viewdCount: number;
-  readingTime: number;
+  featuredImage: string | StaticImageData;
+  desc: string;
   postType?: "standard" | "video" | "gallery" | "audio";
+  createdAt: string; // Add this line
 }
+
 
 export type TwMainColor =
   | "pink"
