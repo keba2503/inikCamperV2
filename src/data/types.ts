@@ -141,3 +141,21 @@ export interface CarDataType {
     lng: number;
   };
 }
+
+// types.ts
+export interface Blog {
+  id: number;
+  title: string;
+  description: string;
+  article: string;
+  coverImageUrl: string;
+  bodyImageUrl: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface CloudinaryImage {
+  id: string;
+  url: string;
+}
+
