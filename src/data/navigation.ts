@@ -191,12 +191,12 @@ export const NAVIGATION_DEMO: NavItemType[] = [
             },
             {
                 id: ncNanoId(),
-                href: "/",
+                href: "/faq",
                 name: "FAQ",
             },
             {
                 id: ncNanoId(),
-                href: "/",
+                href: "/gallery",
                 name: "Galería"
             },
             {

@@ -4,12 +4,12 @@ import React, { useEffect, useState } from 'react';
 import parse from 'html-react-parser';
 
 interface Guide {
-  title: string;
-  description: string;
+  question: string;
+  answer: string;
 }
 
-const GuideAccordion: React.FC = () => {
-  const [guides, setGuides] = useState<Guide[]>([]);
+const FaqAccordion: React.FC = () => {
+  const [faqs, setFaqs] = useState<Guide[]>([]);
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
   const toggleAccordion = (index: number) => {
@@ -19,15 +19,15 @@ const GuideAccordion: React.FC = () => {
   useEffect(() => {
     const fetchGuides = async () => {
       try {
-        const response = await fetch('/api/guide');
+        const response = await fetch('/api/faq');
         if (response.ok) {
           const data: Guide[] = await response.json();
-          setGuides(data);
+          setFaqs(data);
         } else {
-          console.error('Error fetching guides:', response.statusText);
+          console.error('Error fetching faqs:', response.statusText);
         }
       } catch (error) {
-        console.error('Error fetching guides:', error);
+        console.error('Error fetching faqs:', error);
       }
     };
 
@@ -36,13 +36,13 @@ const GuideAccordion: React.FC = () => {
 
   return (
     <div className="w-full max-w-6xl mx-auto pt-12 p-6">
-      {guides.map((guide, index) => (
+      {faqs.map((faq, index) => (
         <div key={index} className="mb-4 border-b">
           <button
             className="text-neutral-800 w-full text-left flex justify-between items-center p-4 focus:outline-none"
             onClick={() => toggleAccordion(index)}
           >
-            <span>{guide.title}</span>
+            <span>{faq.question}</span>
             <svg
               className={`w-6 h-6 transform transition-transform ${
                 activeIndex === index ? 'rotate-180' : ''
@@ -62,9 +62,7 @@ const GuideAccordion: React.FC = () => {
           </button>
           {activeIndex === index && (
             <div className="text-neutral-500 dark:text-neutral-300 pb-3 text-justify p-4">
-              <div className="custom-html-styles">
-                {parse(guide.description)}
-              </div>
+              <div className="custom-html-styles">{parse(faq.answer)}</div>
             </div>
           )}
         </div>
@@ -73,4 +71,4 @@ const GuideAccordion: React.FC = () => {
   );
 };
 
-export default GuideAccordion;
+export default FaqAccordion;

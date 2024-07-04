@@ -1,0 +1,57 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  username  String   @unique
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model FAQ {
+  id       Int    @id @default(autoincrement())
+  question String @db.Text
+  answer   String @db.Text
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Guide {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String @db.Text
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Scope {
+  id    Int    @id @default(autoincrement())
+  name  String @unique
+  configs Config[]
+}
+
+model Config {
+  id               Int      @id @default(autoincrement())
+  scope_id         Int
+  title            String?  @db.Text // Renamed and made Text
+  subtitle         String?  @db.Text // Renamed and made Text
+  description      String?  @db.Text // Renamed and made Text
+  additional_text  String?  @db.Text // Renamed and made Text
+  updated_at       DateTime @updatedAt
+
+  scope            Scope    @relation(fields: [scope_id], references: [id])
+
+  @@index([scope_id])
+}
+

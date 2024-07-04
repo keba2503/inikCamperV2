@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import GuideAccordion from '@/app/guide/Guide';
+import FAQAccordion from '@/app/faq/Faq';
 import parse from 'html-react-parser';
 
 interface ApiResponse {
@@ -20,7 +20,7 @@ const Page = () => {
       .then((response) => response.json())
       .then((data) => {
         const filteredData = data.find(
-          (item: ApiResponse) => item.scope_id === 9,
+          (item: ApiResponse) => item.scope_id === 10,
         );
         setData(filteredData || null);
         setLoading(false);
@@ -46,7 +46,7 @@ const Page = () => {
           <span className="block text-base text-neutral-500 md:text-lg dark:text-neutral-400 pt-4 text-justify">
             {parse(data.description)}
           </span>
-          <GuideAccordion />
+          <FAQAccordion />
         </div>
       </header>
     );
