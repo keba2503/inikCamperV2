@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import GuideClient from '../../../(client-components)/(Admin)/Guide/GuideClient';
+import BlogClient from '../../../(client-components)/(Admin)/Blog/BlogClient';
 
 interface GuideIdPageProps {
   params: {
@@ -11,7 +11,7 @@ interface GuideIdPageProps {
 const GuideIdPage: React.FC<GuideIdPageProps> = ({ params }) => {
   const { id } = params;
 
-  return <GuideClient id={id} />;
+  return <BlogClient id={id} />;
 };
 
 GuideIdPage.propTypes = {

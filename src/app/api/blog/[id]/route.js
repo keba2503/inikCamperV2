@@ -11,16 +11,23 @@ export async function DELETE(request, { params }) {
       where: { id: parseInt(id) },
     });
 
-    return NextResponse.json({}, { status: 204 });
+    return new Response(null, { status: 204 }); // Respuesta vacía para el estado 204
   } catch (error) {
+    console.error('Error deleting blog:', error.message);
+
+    if (error.code === 'P2025') { // Prisma specific error for record not found
+      return NextResponse.json(
+          { error: 'Blog not found' },
+          { status: 404 },
+      );
+    }
+
     return NextResponse.json(
         { error: 'Error deleting blog' },
         { status: 500 },
     );
   }
-}
-
-export async function GET(request, { params }) {
+}export async function GET(request, { params }) {
   const { id } = params;
 
   try {
