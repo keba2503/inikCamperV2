@@ -55,3 +55,13 @@ model Config {
   @@index([scope_id])
 }
 
+model Blog {
+  id             Int      @id @default(autoincrement())
+  title          String
+  description    String   @db.Text
+  article        String   @db.Text
+  coverImageUrl  String
+  bodyImageUrl   String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
