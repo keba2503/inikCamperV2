@@ -17,6 +17,7 @@ const links = [
   { name: 'Secciones configurables', href: '/admin/config', icon: CogIcon },
   { name: 'Guía del huésped', href: '/admin/guide', icon: BookOpenIcon },
   { name: 'FAQ', href: '/admin/faq', icon: QuestionMarkCircleIcon },
+  { name: 'Blog', href: '/admin/blog', icon: BookOpenIcon },
   { name: 'Gallery', href: '/admin/gallery', icon: PhotoIcon },
   { name: 'Imagenes Home', href: '/admin/hero', icon: PhotoIcon },
   { name: 'Vista del cliente', href: '/', icon: ArrowLeftOnRectangleIcon },
