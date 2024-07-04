@@ -20,6 +20,8 @@ const GuideAccordion: React.FC = () => {
     const fetchGuides = async () => {
       try {
         const response = await fetch('/api/guide');
+        console.log('entro a guia')
+        console.log(response)
         if (response.ok) {
           const data: Guide[] = await response.json();
           setGuides(data);

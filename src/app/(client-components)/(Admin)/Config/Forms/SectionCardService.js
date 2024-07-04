@@ -65,7 +65,7 @@ const SectionCardService = ({ scope, data }) => {
       const formData = new FormData();
       formData.append('file', image);
       formData.append('upload_preset', 'ml_default');
-      formData.append('folder', 'arinagacolors/service');
+      formData.append('folder', 'inikcamper/service');
 
       try {
         const res = await axios.post(

@@ -93,7 +93,7 @@ const listings = [
         commentCount: 47,
         viewCount: 843,
         like: true,
-        address: "Playa Arinaga",
+        address: "Gran Canaria",
         reviewStart: 3.6,
         reviewCount: 16,
         price: "",

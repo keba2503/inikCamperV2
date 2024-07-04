@@ -61,16 +61,16 @@ const TabsComponent = () => {
   }, [activeTab, scopes, imageURLs]);
 
   const componentMapping = {
-    8: SectionAbout,
-    10: SectionFaq,
-    9: SectionGuide,
-    2: SectionHero,
-    3: SectionOurFeatures,
-    7: SectionService,
-    11: SectionCardService,
-    12: SectionCardOffer,
-    13: SectionOffer,
-    14: SectionBookingSuccess,
+    1: SectionAbout,
+    5: SectionFaq,
+    6: SectionGuide,
+    7: SectionHero,
+    9: SectionOurFeatures,
+    10: SectionService,
+    4: SectionCardService,
+    3: SectionCardOffer,
+    8: SectionOffer,
+    2: SectionBookingSuccess,
   };
 
   const ActiveComponent = componentMapping[activeTab] || null;

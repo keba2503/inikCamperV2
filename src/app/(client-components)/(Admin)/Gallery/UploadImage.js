@@ -20,7 +20,7 @@ const UploadImage = () => {
     const formData = new FormData();
     formData.append('file', image);
     formData.append('upload_preset', 'ml_default');
-    formData.append('folder', 'arinagacolors/gallery');
+    formData.append('folder', 'inikcamper/gallery');
 
     try {
       await axios.post(

@@ -20,7 +20,7 @@ const Page = () => {
       .then((response) => response.json())
       .then((data) => {
         const filteredData = data.find(
-          (item: ApiResponse) => item.scope_id === 9,
+          (item: ApiResponse) => item.scope_id === 6,
         );
         setData(filteredData || null);
         setLoading(false);
