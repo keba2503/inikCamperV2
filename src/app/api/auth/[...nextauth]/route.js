@@ -4,6 +4,7 @@ import prisma from '../../../../lib/db';
 import bcrypt from 'bcrypt';
 
 const authOptions = {
+  debug: true,
   providers: [
     CredentialsProvider({
       name: 'Credentials',
@@ -16,26 +17,38 @@ const authOptions = {
         password: { label: 'Password', type: 'password', placeholder: '*****' },
       },
       async authorize(credentials) {
-        const userFound = await prisma.user.findUnique({
-          where: {
-            email: credentials.email,
-          },
-        });
+        try {
+          console.log('Authorize credentials:', credentials);
+          const userFound = await prisma.user.findUnique({
+            where: {
+              email: credentials.email,
+            },
+          });
 
-        if (!userFound) throw new Error('No user found');
+          if (!userFound) {
+            console.error('No user found');
+            throw new Error('No user found');
+          }
 
-        const matchPassword = await bcrypt.compare(
-          credentials.password,
-          userFound.password,
-        );
+          const matchPassword = await bcrypt.compare(
+              credentials.password,
+              userFound.password,
+          );
 
-        if (!matchPassword) throw new Error('Wrong password');
+          if (!matchPassword) {
+            console.error('Wrong password');
+            throw new Error('Wrong password');
+          }
 
-        return {
-          id: userFound.id,
-          name: userFound.username,
-          email: userFound.email,
-        };
+          return {
+            id: userFound.id,
+            name: userFound.username,
+            email: userFound.email,
+          };
+        } catch (error) {
+          console.error('Authorize error:', error);
+          throw error;
+        }
       },
     }),
   ],
@@ -47,14 +60,26 @@ const authOptions = {
   },
   callbacks: {
     async session({ session, token }) {
-      session.userId = token.id;
-      return session;
+      try {
+        console.log('Session callback:', { session, token });
+        session.userId = token.id;
+        return session;
+      } catch (error) {
+        console.error('Session callback error:', error);
+        throw error;
+      }
     },
     async jwt({ token, user }) {
-      if (user) {
-        token.id = user.id;
+      try {
+        console.log('JWT callback:', { token, user });
+        if (user) {
+          token.id = user.id;
+        }
+        return token;
+      } catch (error) {
+        console.error('JWT callback error:', error);
+        throw error;
       }
-      return token;
     },
   },
 };
