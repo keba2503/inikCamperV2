@@ -6,20 +6,24 @@ import ButtonPrimary from "@/shared/ButtonPrimary";
 import ModalWithTabs from "@/app/(client-components)/(Hero)/ModalWithTabs";
 import axios from 'axios';
 import parse from 'html-react-parser';
+import SkeletonSectionHero3 from '@/components/SkeletonSectionHero3';
 
 const SectionHero3 = ({ className = '' }) => {
     const [showModal, setShowModal] = useState(false);
     const [heroes, setHeroes] = useState([]);
     const [currentHeroIndex, setCurrentHeroIndex] = useState(0);
     const [touchStartX, setTouchStartX] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         const fetchHeroes = async () => {
             try {
                 const response = await axios.get('/api/hero');
                 setHeroes(response.data);
+                setIsLoading(false);
             } catch (error) {
                 console.error('Error fetching heroes:', error);
+                setIsLoading(false);
             }
         };
         fetchHeroes();
@@ -66,6 +70,10 @@ const SectionHero3 = ({ className = '' }) => {
     const handleImageClick = () => {
         nextHero();
     };
+
+    if (isLoading) {
+        return <SkeletonSectionHero3 />;
+    }
 
     return (
         <div className={`nc-SectionHero3 relative ${className}`} data-nc-id="SectionHero3">

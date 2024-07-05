@@ -1,3 +1,24 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+/* Añade esto en tu archivo CSS global o en el CSS del componente */
+.modal-class {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    right: auto;
+    bottom: auto;
+    marginRight: '-50%';
+    transform: 'translate(-50%, -50%)';
+    backgroundColor: '#fff';
+    padding: '20px';
+    borderRadius: '4px';
+    boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)';
+    outline: 'none';
+}
+
+.overlay-class {
+    backgroundColor: 'rgba(0, 0, 0, 0.75)';
+}

@@ -5,22 +5,20 @@ import axios from 'axios';
 import Card12 from './Card12';
 import Card13 from './Card13';
 import { Blog, CloudinaryImage } from '@/data/types';
+import SkeletonSectionMagazine5 from '@/components/SkeletonSectionMagazine5';
 
 const SectionMagazine5: React.FC = () => {
     const [blogs, setBlogs] = useState<Blog[]>([]);
     const [images, setImages] = useState<CloudinaryImage[]>([]);
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
 
     const fetchBlogs = async () => {
-        setIsLoading(true);
         try {
             const response = await fetch('/api/blog');
             const data: Blog[] = await response.json();
             setBlogs(data);
         } catch (error) {
             console.error('Error fetching blogs:', error);
-        } finally {
-            setIsLoading(false);
         }
     };
 
@@ -35,8 +33,12 @@ const SectionMagazine5: React.FC = () => {
     };
 
     useEffect(() => {
-        fetchBlogs();
-        fetchImages();
+        const fetchData = async () => {
+            await fetchBlogs();
+            await fetchImages();
+            setIsLoading(false);
+        };
+        fetchData();
     }, []);
 
     const getImageUrl = (publicId: string) => {
@@ -47,7 +49,7 @@ const SectionMagazine5: React.FC = () => {
     return (
         <div className="nc-SectionMagazine5">
             {isLoading ? (
-                <p>Loading...</p>
+                <SkeletonSectionMagazine5 /> // Usar el nuevo componente SkeletonSectionMagazine5 durante la carga
             ) : (
                 <div className="grid lg:grid-cols-2 gap-6 md:gap-8">
                     {blogs[0] && (

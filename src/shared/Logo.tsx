@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import logoImg from "@/images/logo.png";
-import logoLightImg from "@/images/logo-light.png";
+import logoLightImg from "@/images/logo.png";
 import Link from "next/link";
 import { StaticImageData } from "next/image";
 

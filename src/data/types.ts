@@ -17,6 +17,7 @@ export interface TaxonomyType {
   thumbnail?: string;
   desc?: string;
   color?: TwMainColor | string;
+  additionalText?: | string;
   taxonomy: "category" | "tag";
   listingType?: "stay" | "experiences" | "car";
 }
