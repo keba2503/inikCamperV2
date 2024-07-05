@@ -45,7 +45,7 @@ const InikDarkDetailPage: FC<InikDarkDetailPageProps> = ({}) => {
             script.onload = () => {
                 if (window.BookingToolIframe) {
                     window.BookingToolIframe.initialize({
-                        url: 'https://login.smoobu.com/es/booking-tool/iframe/765914',
+                        url: 'https://login.smoobu.com/es/booking-tool/iframe/765914/2156061',
                         baseUrl: 'https://login.smoobu.com',
                         target: '#apartmentIframeAll'
                     });
@@ -341,7 +341,7 @@ const InikDarkDetailPage: FC<InikDarkDetailPageProps> = ({}) => {
     const renderSidebar = () => {
         return (
             <div className="listingSectionSidebar__wrap shadow-xl p-4 lg:p-6">
-               {/* <div id="apartmentIframeAll"></div>*/}
+               <div id="apartmentIframeAll"></div>
                 <h3 className="mt-4 text-lg font-semibold text-center">Reservas Externas</h3>
                 <div className="flex justify-around mt-2">
                     <a href="https://www.airbnb.es/rooms/1065876841808475957?source_impression_id=p3_1717959275_P3BecdKmPUlTn_Y6" target="_blank" rel="noopener noreferrer">

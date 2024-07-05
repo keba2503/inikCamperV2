@@ -1,77 +1,79 @@
-import Heading from "@/shared/Heading";
-import Image from "next/image";
+import Image, {StaticImageData} from "next/image";
 import React from "react";
+import img from "../../images/Exteriores/1.jpg";
+import img1 from "../../images/Exteriores/2.jpg";
+import img2 from "../../images/Exteriores/3.jpg";
+import img3 from "../../images/Exteriores/4.jpg";
 
 export interface People {
   id: string;
   name: string;
   job: string;
-  avatar: string;
+  avatar: StaticImageData;
 }
 
 const FOUNDER_DEMO: People[] = [
   {
     id: "1",
-    name: `Niamh O'Shea`,
-    job: "Co-founder and Chief Executive",
-    avatar:
-      "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80",
-  },
-  {
-    id: "4",
-    name: `Danien Jame`,
-    job: "Co-founder and Chief Executive",
-    avatar:
-      "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80",
-  },
-  {
-    id: "3",
-    name: `Orla Dwyer`,
-    job: "Co-founder, Chairman",
-    avatar:
-      "https://images.unsplash.com/photo-1560365163-3e8d64e762ef?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80",
+    name: `Isabel Soler`,
+    job: "Co-founder",
+    avatar: img3,
   },
   {
     id: "2",
-    name: `Dara Frazier`,
-    job: "Co-Founder, Chief Strategy Officer",
-    avatar:
-      "https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80",
+    name: `Karen Borrero`,
+    job: "Co-founder",
+    avatar: img2,
+  },
+  {
+    id: "3",
+    name: `Iria`,
+    job: "",
+    avatar: img1,
+  },
+  {
+    id: "4",
+    name: `Nauzet`,
+    job: "",
+    avatar: img,
   },
 ];
 
 const SectionFounder = () => {
   return (
-    <div className="nc-SectionFounder relative">
-      <Heading
-        desc="We’re impartial and independent, and every day we create distinctive,
-          world-class programmes and content"
-      >
-        ⛱ Founder
-      </Heading>
-      <div className="grid sm:grid-cols-2 gap-x-5 gap-y-8 lg:grid-cols-4 xl:gap-x-8">
-        {FOUNDER_DEMO.map((item) => (
-          <div key={item.id} className="max-w-sm">
-            <div className="relative h-0 aspect-h-1 aspect-w-1 rounded-xl overflow-hidden">
-              <Image
-                fill
-                className=" object-cover"
-                src={item.avatar}
-                alt=""
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 30vw, 30vw"
-              />
-            </div>
+      <div className="nc-SectionFounder relative">
+        <div className="text-gray-500 sm:text-lg dark:text-gray-400">
+          <h2 className="mb-4 text-4xl tracking-tight font-bold text-gray-900 dark:text-white">Una familia</h2>
+          <p className="mb-4 font-light text-justify">
+            Somos apasionados de la libertad, haciendo planes para vivencias, disfrutando la vida con lo que te da, sin muchos complementos, y pudiendo transmitir eso a nuestro entorno a través del medio que conocemos, tenemos experiencia y también disfrutamos de la 'Van Life'.
+          </p>
+          <p className="mb-4 font-medium pb-10">
+            Somos una familia aventurera y emprendedora. Nuestras iniciales unidas forman el nombre de nuestro estupendo equipo 'INIK'.
+          </p>
+        </div>
 
-            <h3 className="text-lg font-semibold text-neutral-900 mt-4 md:text-xl dark:text-neutral-200">
-              {item.name}
-            </h3>
-            <span className="block text-sm text-neutral-500 sm:text-base dark:text-neutral-400">
+        <div className="grid sm:grid-cols-2 gap-x-5 gap-y-8 lg:grid-cols-4 xl:gap-x-8">
+          {FOUNDER_DEMO.map((item) => (
+              <div key={item.id} className="max-w-sm">
+                <div className="relative h-0 aspect-h-1 aspect-w-1 rounded-xl overflow-hidden">
+                  <Image
+                      fill
+                      className="object-cover"
+                      src={item.avatar}
+                      alt={item.name}
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 30vw, 30vw"
+                  />
+                </div>
+                <h3 className="text-lg font-semibold text-neutral-900 mt-4 md:text-xl dark:text-neutral-200">
+                  {item.name}
+                </h3>
+                <span className="block text-sm text-neutral-500 sm:text-base dark:text-neutral-400">
               {item.job}
             </span>
-          </div>
-        ))}
+              </div>
+          ))}
+        </div>
       </div>
-    </div>
   );
 };
 

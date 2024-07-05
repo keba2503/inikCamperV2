@@ -45,7 +45,7 @@ const InikDarkDetailPage: FC<InikDarkDetailPageProps> = ({}) => {
             script.onload = () => {
                 if (window.BookingToolIframe) {
                     window.BookingToolIframe.initialize({
-                        url: 'https://login.smoobu.com/es/booking-tool/iframe/765914',
+                        url: "https://login.smoobu.com/es/booking-tool/iframe/765914/1998779",
                         baseUrl: 'https://login.smoobu.com',
                         target: '#apartmentIframeAll'
                     });

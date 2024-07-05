@@ -1,4 +1,4 @@
-'use client';
+'use client'
 
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
@@ -10,7 +10,7 @@ import Avatar from '@/shared/Avatar';
 import Badge from '@/shared/Badge';
 import SocialsList from '@/shared/SocialsList';
 import ButtonPrimary from "../../../shared/ButtonPrimary";
-import BlogDetailSkeleton from '../../../components/BlogDetailSkeleton'; 
+import BlogDetailSkeleton from '../../../components/BlogDetailSkeleton';
 
 const BlogDetailPage = () => {
     const params = useParams();
@@ -59,21 +59,25 @@ const BlogDetailPage = () => {
 
     const { firstHalf, secondHalf } = splitArticle(blog.article);
 
-    const parsedFirstHalf = parse(firstHalf, {
+    const parseOptions = {
         replace: (domNode) => {
+            if (domNode.name === 'a') {
+                const href = domNode.attribs.href;
+                const isExternal = href.startsWith('http://') || href.startsWith('https://');
+                return (
+                    <a href={isExternal ? href : `http://${href}`} target="_blank" rel="noopener noreferrer">
+                        {domToReact(domNode.children)}
+                    </a>
+                );
+            }
             if (domNode.name === 'p') {
                 return <span className="block mb-2">{domToReact(domNode.children)}</span>;
             }
         },
-    });
+    };
 
-    const parsedSecondHalf = parse(secondHalf, {
-        replace: (domNode) => {
-            if (domNode.name === 'p') {
-                return <span className="block mb-2">{domToReact(domNode.children)}</span>;
-            }
-        },
-    });
+    const parsedFirstHalf = parse(firstHalf, parseOptions);
+    const parsedSecondHalf = parse(secondHalf, parseOptions);
 
     const handleShareClick = () => {
         setShowShareOptions(!showShareOptions);
