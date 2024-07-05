@@ -6,6 +6,7 @@ interface GuideIdPageProps {
   params: {
     id: string;
   };
+
 }
 
 const HeroIdPage: React.FC<GuideIdPageProps> = ({ params }) => {

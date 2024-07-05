@@ -71,3 +71,10 @@ model Video {
   title     String
   thumbnail String
 }
+
+model Hero {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String
+  imageUrl    String
+}
