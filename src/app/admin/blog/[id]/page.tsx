@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import HeroClient from '../../../(client-components)/(Admin)/Hero/HeroClient';
+import HeroClient from '../../../(client-components)/(Admin)/Blog/BlogClient';
 
 interface GuideIdPageProps {
   params: {
@@ -8,16 +8,16 @@ interface GuideIdPageProps {
   };
 }
 
-const HeroIdPage: React.FC<GuideIdPageProps> = ({ params }) => {
+const BlogIdPage: React.FC<GuideIdPageProps> = ({ params }) => {
   const { id } = params;
 
   return <HeroClient id={id} />;
 };
 
-HeroIdPage.propTypes = {
+BlogIdPage.propTypes = {
   params: PropTypes.shape({
     id: PropTypes.string.isRequired,
   }).isRequired,
 };
 
-export default HeroIdPage;
+export default BlogIdPage;
