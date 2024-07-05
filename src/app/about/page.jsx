@@ -46,7 +46,7 @@ const PageAbout = () => {
     const parsedAdditionalText = parse(data.additional_text, {
         replace: (domNode) => {
             if (domNode.name === 'p') {
-                return <p className="text-justify">{domToReact(domNode.children)}</p>;
+                return <p className="text-justify text-gray-600 mt-[-4]">{domToReact(domNode.children)}</p>;
             }
             if (domNode.name === 'blockquote') {
                 return <blockquote className="text-justify pl-4 border-l-4 border-gray-500">{domToReact(domNode.children)}</blockquote>;
@@ -69,8 +69,8 @@ const PageAbout = () => {
                     btnText=""
                     subHeading={parsedDescription}
                 />
-                <div className="relative py-1">
-                    <div>{parsedAdditionalText}</div>
+                <div className="relative py-1 mt-[-4]">
+                    <div className="text-gray-600">{parsedAdditionalText}</div>
                 </div>
                 <SectionFounder />
             </div>
