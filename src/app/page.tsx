@@ -8,7 +8,6 @@ import Heading from "@/shared/Heading";
 import SectionGridFeaturePlaces from "@/components/SectionGridFeaturePlaces";
 import SectionVideos from "@/components/SectionVideos";
 import PageContact from "@/app/contact/page";
-import PageMaps from "@/app/maps/page";
 
 
 const DEMO_CATS_2: TaxonomyType[] = [

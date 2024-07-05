@@ -11,6 +11,7 @@ import {
 } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import {VideoCameraIcon} from "@heroicons/react/20/solid";
 
 const links = [
   { name: 'Home', href: '/admin', icon: HomeIcon },
@@ -21,6 +22,7 @@ const links = [
   { name: 'Gallery', href: '/admin/gallery', icon: PhotoIcon },
   { name: 'Imagenes Home', href: '/admin/hero', icon: PhotoIcon },
   { name: 'Vista del cliente', href: '/', icon: ArrowLeftOnRectangleIcon },
+  { name: 'Videos', href: '/admin/videos', icon: VideoCameraIcon }
 ];
 
 export default function NavLinks() {
