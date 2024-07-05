@@ -11,7 +11,12 @@ import {usePathname, useRouter} from "next/navigation";
 import {Amenities_demos, PHOTOS} from "./constant";
 import {Route} from "next";
 
-;
+declare global {
+    interface Window {
+        BookingToolIframe: any;
+    }
+}
+
 
 export interface InikDarkDetailPageProps {
 }
@@ -38,7 +43,7 @@ const InikDarkDetailPage: FC<InikDarkDetailPageProps> = ({}) => {
             script.src = 'https://login.smoobu.com/js/Settings/BookingToolIframe.js';
             script.async = true;
             script.onload = () => {
-                if (window.BookingToolIframe) {
+                if (window.BookingToolIframe ) {
                     window.BookingToolIframe.initialize({
                         url: 'https://login.smoobu.com/es/booking-tool/iframe/765914',
                         baseUrl: 'https://login.smoobu.com',

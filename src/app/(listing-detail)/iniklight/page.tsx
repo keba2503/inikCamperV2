@@ -11,7 +11,12 @@ import {usePathname, useRouter} from "next/navigation";
 import {Amenities_demos, PHOTOS} from "./constant";
 import {Route} from "next";
 
-;
+declare global {
+    interface Window {
+        BookingToolIframe: any;
+    }
+}
+
 
 export interface InikDarkDetailPageProps {
 }
