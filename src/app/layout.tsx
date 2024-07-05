@@ -9,7 +9,7 @@ import ClientWrapper from '../components/ClientWrapper';
 import React from 'react';
 
 export const metadata: Metadata = {
-  title: 'Arinaga Colors - Booking online',
+  title: 'InikCamper - Booking CamperVan',
   description: 'Booking online',
   keywords: 'Booking online',
 };
