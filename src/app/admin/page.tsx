@@ -8,7 +8,6 @@ export default function Page() {
                     <h5 className="text-xl font-bold leading-none text-gray-900 dark:text-white mb-3">
                         Panel de administrador
                     </h5>
-
                 </div>
             </div>
         </main>

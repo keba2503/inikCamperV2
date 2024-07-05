@@ -15,16 +15,12 @@ import SectionOffer from '../../../(client-components)/(Admin)/Config/Forms/Sect
 import SectionBookingSuccess from '../../../(client-components)/(Admin)/Config/Forms/SectionBookingSuccess';
 
 const componentMapping = {
-  8: SectionAbout,
-  10: SectionFaq,
-  9: SectionGuide,
-  2: SectionHero,
-  3: SectionOurFeatures,
-  7: SectionService,
-  11: SectionCardService,
-  12: SectionCardOffer,
-  13: SectionOffer,
-  14: SectionBookingSuccess,
+  1: SectionAbout,
+  5: SectionFaq,
+  6: SectionGuide,
+  10: SectionService,
+  4: SectionCardService,
+  2: SectionBookingSuccess,
 };
 
 const ConfigIdPage = ({ params }) => {

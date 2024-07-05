@@ -93,7 +93,7 @@ const SectionBookingSuccess = ({ scope, data }) => {
           htmlFor="description-input"
           className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
         >
-          Subtitulo
+          Descripción
         </label>
         <RichTextEditor value={description} onChange={setDescription} />
       </div>

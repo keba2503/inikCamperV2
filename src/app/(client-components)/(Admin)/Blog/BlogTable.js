@@ -70,6 +70,11 @@ const BlogTable = () => {
         fetchBlogs();
     }, [fetchBlogs]);
 
+    const truncateText = (text, maxLength) => {
+        if (text.length <= maxLength) return text;
+        return text.substring(0, maxLength) + '...';
+    };
+
     return (
         <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
             <div className="flex justify-between p-2">
@@ -110,12 +115,12 @@ const BlogTable = () => {
                             scope="row"
                             className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                         >
-                            {blog.title}
+                            {truncateText(blog.title, 20)}
                         </th>
-                        <td className="px-6 py-4">{blog.description}</td>
-                        <td className="px-6 py-4">{blog.article}</td>
-                        <td className="px-6 py-4">{blog.coverImageUrl}</td>
-                        <td className="px-6 py-4">{blog.bodyImageUrl}</td>
+                        <td className="px-6 py-4">{truncateText(blog.description, 30)}</td>
+                        <td className="px-6 py-4">{truncateText(blog.article, 50)}</td>
+                        <td className="px-6 py-4">{truncateText(blog.coverImageUrl, 20)}</td>
+                        <td className="px-6 py-4">{truncateText(blog.bodyImageUrl, 20)}</td>
                         <td className="px-6 py-4 flex space-x-2">
                             <Link
                                 className="font-medium text-blue-600 dark:text-blue-500 hover:underline"

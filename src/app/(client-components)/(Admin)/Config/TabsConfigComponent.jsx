@@ -64,12 +64,8 @@ const TabsComponent = () => {
     1: SectionAbout,
     5: SectionFaq,
     6: SectionGuide,
-    7: SectionHero,
-    9: SectionOurFeatures,
     10: SectionService,
     4: SectionCardService,
-    3: SectionCardOffer,
-    8: SectionOffer,
     2: SectionBookingSuccess,
   };
 
