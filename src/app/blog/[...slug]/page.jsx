@@ -10,6 +10,7 @@ import Avatar from '@/shared/Avatar';
 import Badge from '@/shared/Badge';
 import SocialsList from '@/shared/SocialsList';
 import ButtonPrimary from "../../../shared/ButtonPrimary";
+import BlogDetailSkeleton from '../../../components/BlogDetailSkeleton'; 
 
 const BlogDetailPage = () => {
     const params = useParams();
@@ -45,7 +46,7 @@ const BlogDetailPage = () => {
         }
     }, [id]);
 
-    if (!blog) return <div>Loading...</div>;
+    if (!blog) return <BlogDetailSkeleton />;
 
     const splitArticle = (article) => {
         const paragraphs = article.split('</p>');
