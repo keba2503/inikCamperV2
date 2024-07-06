@@ -7,6 +7,7 @@ import ModalWithTabs from "@/app/(client-components)/(Hero)/ModalWithTabs";
 import axios from 'axios';
 import parse from 'html-react-parser';
 import SkeletonSectionHero3 from '@/components/SkeletonSectionHero3';
+import superhost from '@/images/superhost.png';
 
 const SectionHero3 = ({ className = '' }) => {
     const [showModal, setShowModal] = useState(false);
@@ -87,6 +88,14 @@ const SectionHero3 = ({ className = '' }) => {
                         <h2 className="font-bold text-white text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl !leading-[115%]"> {/* Adjusted text color */}
                             {parse(currentHero.description)}
                         </h2>
+                    </div>
+                    <div className="absolute top-4 left-4 z-30">
+                        <Image
+                            src={superhost}
+                            alt="Superhost Badge"
+                            width={180}
+                            height={150}
+                        />
                     </div>
                     <div
                         className="relative w-full aspect-w-1 aspect-h-1 sm:aspect-w-4 sm:aspect-h-3 lg:aspect-w-16 lg:aspect-h-9 xl:aspect-h-8"
