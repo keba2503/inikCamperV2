@@ -6,6 +6,7 @@ import SectionGridFeaturePlaces from "@/components/SectionGridFeaturePlaces";
 import SectionVideos from "@/components/SectionVideos";
 import PageContact from "@/app/contact/page";
 import Services from "@/app/services/Services";
+import OfferBanner from "@/components/OfferBanner";
 
 
 function PageHome3() {
@@ -16,6 +17,8 @@ function PageHome3() {
             {/* SECTION HERO */}
             <div className="container px-1 sm:px-4 mb-24 ">
                 <SectionHero3 className=""/>
+                <br/>
+                <OfferBanner/>
             </div>
             <div className="container px-1 sm:px-4 mb-24 ">
                 <h3 className="text-center text-2xl font-bold mb-4">Reserva aquí</h3>
