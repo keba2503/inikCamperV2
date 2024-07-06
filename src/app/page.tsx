@@ -13,26 +13,18 @@ function PageHome3() {
         <main className="nc-PageHome3 relative overflow-hidden">
             {/* GLASSMOPHIN */}
             <BgGlassmorphism/>
-
             {/* SECTION HERO */}
             <div className="container px-1 sm:px-4 mb-24 ">
                 <SectionHero3 className=""/>
             </div>
-
             <div className="container px-1 sm:px-4 mb-24 ">
                 <h3 className="text-center text-2xl font-bold mb-4">Reserva aquí</h3>
                 <Booking/>
                 <SectionGridFeaturePlaces cardType="card2"/>
-            </div>
-
-            <div className="container relative space-y-24 mb-24 ">
-
-                  <Services/>
-
+                <Services/>
                 <SectionVideos/>
-                {/* SECTION */}
-                <PageContact/>
             </div>
+            <PageContact/>
         </main>
     );
 }

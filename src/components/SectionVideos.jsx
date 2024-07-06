@@ -49,7 +49,7 @@ const SectionVideos = ({className = ""}) => {
         const videoId = extractVideoId(video.thumbnail);
         return (
             <div
-                className="group aspect-w-16 aspect-h-16 sm:aspect-h-9 bg-neutral-800 rounded-3xl overflow-hidden border-4 border-white dark:border-neutral-900 sm:rounded-[50px] sm:border-[10px] will-change-transform"
+                className="group aspect-w-16 aspect-h-16 sm:aspect-h-9 bg-neutral-800 rounded-2xl overflow-hidden border-4 border-white dark:border-neutral-900 sm:rounded-[50px] sm:border-[10px] will-change-transform"
                 title={video.title}
             >
                 {isPlay && videoId ? (
@@ -88,7 +88,7 @@ const SectionVideos = ({className = ""}) => {
         if (index === currentVideo) return null;
         return (
             <div
-                className="group relative aspect-h-16 aspect-w-16 rounded-2xl cursor-pointer overflow-hidden sm:aspect-h-12 sm:rounded-3xl lg:aspect-h-9"
+                className="group relative aspect-h-16 aspect-w-16 rounded-2xl cursor-pointer overflow-hidden sm:aspect-h-12 sm:rounded-2xl lg:aspect-h-9"
                 onClick={() => {
                     setCurrentVideo(index);
                     !isPlay && setIsPlay(true);
@@ -114,7 +114,7 @@ const SectionVideos = ({className = ""}) => {
     };
 
     return (
-        <div className={`nc-SectionVideos ${className}`}>
+        <div className={`nc-SectionVideos ${className} my-28`} >
             <Heading
                 desc="Descubre nuestros videos más populares. ¡Todos son bienvenidos!"
             >
@@ -122,7 +122,7 @@ const SectionVideos = ({className = ""}) => {
             </Heading>
 
             <div className="flex flex-col relative sm:pr-4 sm:py-4 md:pr-6 md:py-6 xl:pr-14 xl:py-14 lg:flex-row">
-                <div className="absolute -top-4 -bottom-4 -right-4 w-2/3 rounded-3xl bg-primary-100 bg-opacity-40 z-0 sm:rounded-[50px] md:top-0 md:bottom-0 md:right-0 xl:w-1/2 dark:bg-neutral-800 dark:bg-opacity-40"></div>
+                <div className="absolute -top-4 -bottom-4 -right-4 w-2/3 rounded-2xl bg-primary-100 bg-opacity-40 z-0 sm:rounded-[50px] md:top-0 md:bottom-0 md:right-0 xl:w-1/2 dark:bg-neutral-800 dark:bg-opacity-40"></div>
                 <div className="flex-grow relative pb-2 sm:pb-4 lg:pb-0 lg:pr-5 xl:pr-6">
                     {renderMainVideo()}
                 </div>

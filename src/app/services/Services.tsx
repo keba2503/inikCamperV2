@@ -1,10 +1,10 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import CardCategory6 from '@/components/CardCategory6';
-import { TaxonomyType } from '@/data/types';
+import {TaxonomyType} from '@/data/types';
 import parse from 'html-react-parser';
-import { Route } from "next";
+import {Route} from "next";
 import Heading from "@/shared/Heading";
 import SkeletonServices from './loading';
 
@@ -46,7 +46,7 @@ const Services: React.FC = () => {
 
                 setHeader(
                     headerData
-                        ? { title: headerData.title, description: headerData.description }
+                        ? {title: headerData.title, description: headerData.description}
                         : null,
                 );
                 setData(filteredServices);
@@ -79,7 +79,7 @@ const Services: React.FC = () => {
     };
 
     if (loading || images.length === 0 || data.length === 0) {
-        return <SkeletonServices />;
+        return <SkeletonServices/>;
     }
 
     const transformedData: TaxonomyType[] = data.map(service => ({
@@ -87,13 +87,13 @@ const Services: React.FC = () => {
         href: "/services" as unknown as Route,
         name: service.title,
         taxonomy: "category",
-        count: 188288, // Este valor es estático, puedes adaptarlo si tienes el conteo real.
+        count: 188288,
         thumbnail: getImageUrl(service.subtitle),
         additionalText: service.additional_text
     }));
 
     return (
-        <div className="container relative space-y-24 mb-24 pt-12">
+        <div className="nc-SectionGridFeaturePlaces relative py-20">
             {header && (
                 <Heading desc={parse(header.description)}>
                     {header.title}
@@ -102,17 +102,17 @@ const Services: React.FC = () => {
             <div className="grid grid-cols-12 gap-6">
                 {transformedData.slice(0, 1).map((taxonomy, index) => (
                     <div key={index} className="col-span-12 sm:col-span-6 lg:col-span-4 flex">
-                        <CardCategory6 taxonomy={taxonomy} additionalText={taxonomy.additionalText} />
+                        <CardCategory6 taxonomy={taxonomy} additionalText={taxonomy.additionalText}/>
                     </div>
                 ))}
                 <div className="col-span-12 sm:col-span-6 lg:col-span-4 grid grid-rows-2 gap-6">
                     {transformedData.slice(1, 3).map((taxonomy, index) => (
-                        <CardCategory6 key={index} taxonomy={taxonomy} additionalText={taxonomy.additionalText} />
+                        <CardCategory6 key={index} taxonomy={taxonomy} additionalText={taxonomy.additionalText}/>
                     ))}
                 </div>
                 {transformedData.slice(3, 4).map((taxonomy, index) => (
                     <div key={index} className="col-span-12 sm:col-span-6 lg:col-span-4 flex">
-                        <CardCategory6 taxonomy={taxonomy} additionalText={taxonomy.additionalText} />
+                        <CardCategory6 taxonomy={taxonomy} additionalText={taxonomy.additionalText}/>
                     </div>
                 ))}
             </div>

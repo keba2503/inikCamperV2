@@ -46,7 +46,7 @@ const SectionGridFeaturePlaces: FC<SectionGridFeaturePlacesProps> = ({
   };
 
   return (
-      <div className="nc-SectionGridFeaturePlaces relative">
+      <div className="nc-SectionGridFeaturePlaces relative py-20">
         <HeaderFilter
             tabActive={"Gran Canaria"}
             subHeading={subHeading}
