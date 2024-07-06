@@ -14,6 +14,8 @@ import SectionCardService from './Forms/SectionCardService';
 import SectionCardOffer from './Forms/SectionCardOffer';
 import SectionOffer from './Forms/SectionOffer';
 import SectionBookingSuccess from './Forms/SectionBookingSuccess';
+import SectionTeam from "./Forms/SectionTeam";
+import SectionValue from "./Forms/SectionValue";
 
 const TabsComponent = () => {
   const [scopes, setScopes] = useState([]);
@@ -67,6 +69,8 @@ const TabsComponent = () => {
     10: SectionService,
     4: SectionCardService,
     2: SectionBookingSuccess,
+    11: SectionTeam,
+    12: SectionValue,
   };
 
   const ActiveComponent = componentMapping[activeTab] || null;
