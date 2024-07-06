@@ -17,7 +17,6 @@ function PageHome3() {
             {/* SECTION HERO */}
             <div className="container px-1 sm:px-4 mb-24 ">
                 <SectionHero3 className=""/>
-                <br/>
                 <OfferBanner/>
             </div>
             <div className="container px-1 sm:px-4 mb-24 ">

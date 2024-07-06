@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect} from "react";
 import Image from "next/image";
 import ButtonPrimary from "@/shared/ButtonPrimary";
 import ModalWithTabs from "@/app/(client-components)/(Hero)/ModalWithTabs";
@@ -9,7 +9,7 @@ import parse from 'html-react-parser';
 import SkeletonSectionHero3 from '@/components/SkeletonSectionHero3';
 import superhost from '@/images/superhost.png';
 
-const SectionHero3 = ({ className = '' }) => {
+const SectionHero3 = ({className = ''}) => {
     const [showModal, setShowModal] = useState(false);
     const [heroes, setHeroes] = useState([]);
     const [currentHeroIndex, setCurrentHeroIndex] = useState(0);
@@ -73,14 +73,15 @@ const SectionHero3 = ({ className = '' }) => {
     };
 
     if (isLoading) {
-        return <SkeletonSectionHero3 />;
+        return <SkeletonSectionHero3/>;
     }
 
     return (
         <div className={`nc-SectionHero3 relative ${className}`} data-nc-id="SectionHero3">
             {currentHero && (
                 <>
-                    <div className="absolute inset-0 bg-gradient-to-b from-black/60 to-transparent z-10"></div> {/* Overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-b from-black/60 to-transparent z-10"></div>
+                    {/* Overlay */}
                     <div className="absolute z-20 inset-x-0 top-[10%] sm:top-[15%] text-center flex flex-col items-center max-w-2xl mx-auto space-y-4 lg:space-y-5 xl:space-y-8">
                         <span className="sm:text-lg md:text-xl font-semibold text-white"> {/* Adjusted text color */}
                             {parse(currentHero.title)}
@@ -89,14 +90,27 @@ const SectionHero3 = ({ className = '' }) => {
                             {parse(currentHero.description)}
                         </h2>
                     </div>
-                    <div className="absolute top-4 left-4 z-30">
-                        <Image
-                            src={superhost}
-                            alt="Superhost Badge"
-                            width={180}
-                            height={150}
-                        />
+                    <div>
+                        <div className="absolute top-4 left-4 z-30  sm:hidden">
+                            <Image
+                                src={superhost}
+                                alt="Superhost Badge"
+                                width={60}
+                                height={60}
+                            />
+                        </div>
+
+                        <div className="absolute top-4 left-4 z-30 hidden sm:block">
+                            <Image
+                                src={superhost}
+                                alt="Superhost Badge"
+                                width={180}
+                                height={150}
+                            />
+                        </div>
                     </div>
+
+
                     <div
                         className="relative w-full aspect-w-1 aspect-h-1 sm:aspect-w-4 sm:aspect-h-3 lg:aspect-w-16 lg:aspect-h-9 xl:aspect-h-8"
                         id="default-carousel"
@@ -114,7 +128,7 @@ const SectionHero3 = ({ className = '' }) => {
                                 data-carousel-item
                             >
                                 <Image
-                                    className="absolute inset-0 object-cover rounded-xl"
+                                    className="absolute inset-0 object-cover"
                                     src={`https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/${hero.imageUrl}.webp`}
                                     alt="hero"
                                     layout="fill"
@@ -133,9 +147,12 @@ const SectionHero3 = ({ className = '' }) => {
                     </div>
                 </>
             )}
-            {showModal && <ModalWithTabs onClose={() => setShowModal(false)} />}
+            {
+                showModal && <ModalWithTabs onClose={() => setShowModal(false)}/>
+            }
         </div>
-    );
+    )
+        ;
 };
 
 export default SectionHero3;
