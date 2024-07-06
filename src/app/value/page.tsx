@@ -8,7 +8,7 @@ const Page = () => {
                 style={{ backgroundImage: "url('https://rvdmediagroup.com/wp-content/uploads/2018/01/Roque-Nublo1.jpg')" }}
             >
                 <div className="absolute inset-0 bg-black opacity-10"></div>
-                <div className="container mx-auto py-4 lg:py-16 space-y-10 lg:space-y-16 relative z-10 px-6 sm:px-8 lg:px-16 py-8 rounded-2xl mt-10 lg:mt-32" style={{ backgroundColor: 'rgba(255, 255, 255, 0.8)' }}>
+                <div className="container mx-auto py-4 lg:py-16 space-y-10 lg:space-y-16 relative z-10 px-6 sm:px-8 lg:px-16 py-8 lg:rounded-2xl mt-10 lg:mt-32" style={{ backgroundColor: 'rgba(255, 255, 255, 0.8)' }}>
                     <div className="nc-SectionFounder relative">
                         <div className="text-gray-500 sm:text-lg dark:text-gray-400">
                             <h2 className="mb-4 text-4xl tracking-tight font-bold text-gray-900 dark:text-black">
