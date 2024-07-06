@@ -1,4 +1,4 @@
-import Image, {StaticImageData} from "next/image";
+import Image, { StaticImageData } from "next/image";
 import React from "react";
 import img from "../../images/Exteriores/1.jpg";
 import img1 from "../../images/Exteriores/2.jpg";
@@ -43,12 +43,14 @@ const SectionFounder = () => {
   return (
       <div className="nc-SectionFounder relative">
         <div className="text-gray-500 sm:text-lg dark:text-gray-400">
-          <h2 className="mb-4 text-4xl tracking-tight font-bold text-gray-900 dark:text-white">Una familia</h2>
+          <h2 className="mb-4 text-4xl tracking-tight font-bold text-gray-900 dark:text-white">
+            Una familia
+          </h2>
           <p className="mb-4 font-light text-justify">
-            Somos apasionados de la libertad, haciendo planes para vivencias, disfrutando la vida con lo que te da, sin muchos complementos, y pudiendo transmitir eso a nuestro entorno a través del medio que conocemos, tenemos experiencia y también disfrutamos de la 'Van Life'.
+            Somos apasionados de la libertad, haciendo planes para vivencias, disfrutando la vida con lo que te da, sin muchos complementos, y pudiendo transmitir eso a nuestro entorno a través del medio que conocemos, tenemos experiencia y también disfrutamos de la &apos;Van Life&apos;.
           </p>
           <p className="mb-4 font-medium pb-10">
-            Somos una familia aventurera y emprendedora. Nuestras iniciales unidas forman el nombre de nuestro estupendo equipo 'INIK'.
+            Somos una familia aventurera y emprendedora. Nuestras iniciales unidas forman el nombre de nuestro estupendo equipo &apos;INIK&apos;.
           </p>
         </div>
 
