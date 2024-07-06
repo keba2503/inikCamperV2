@@ -181,14 +181,37 @@ export const NAVIGATION_DEMO: NavItemType[] = [
     {
         id: ncNanoId(),
         href: "/",
-        name: "Más",
+        name: "Nosotros",
         type: "dropdown",
         children: [
             {
                 id: ncNanoId(),
                 href: "/about",
-                name: "Nosotros",
+                name: "Nuestro concepto",
             },
+            {
+                id: ncNanoId(),
+                href: "/team",
+                name: "Nuestro equipo",
+            },
+            {
+                id: ncNanoId(),
+                href: "/value",
+                name: "Valores"
+            },
+            {
+                id: ncNanoId(),
+                href: "/review",
+                name: "Reseñas"
+            },
+        ],
+    },
+    {
+        id: ncNanoId(),
+        href: "/",
+        name: "Más",
+        type: "dropdown",
+        children: [
             {
                 id: ncNanoId(),
                 href: "/faq",

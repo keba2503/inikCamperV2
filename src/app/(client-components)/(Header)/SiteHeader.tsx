@@ -27,7 +27,7 @@ let OPTIONS = {
 let OBSERVER: IntersectionObserver | null = null;
 const PAGES_HIDE_HEADER_BORDER: PathName[] = [
 
-  "/listing-stay-detail",
+  "/",
 ];
 
 const SiteHeader = () => {

@@ -1,11 +1,10 @@
 'use client';
 
-import React, { useEffect, useState } from "react";
-import SectionFounder from "./SectionFounder";
+import React, {useEffect, useState} from "react";
 import SectionHero from "./SectionHero";
 import BgGlassmorphism from "@/components/BgGlassmorphism";
 import rightImg from "@/images/about-hero-right.png";
-import parse, { domToReact } from 'html-react-parser';
+import parse, {domToReact} from 'html-react-parser';
 
 const PageAbout = () => {
     const [data, setData] = useState(null);
@@ -43,36 +42,23 @@ const PageAbout = () => {
         }
     });
 
-    const parsedAdditionalText = parse(data.additional_text, {
-        replace: (domNode) => {
-            if (domNode.name === 'p') {
-                return <p className="text-justify text-gray-600 mt-[-4]">{domToReact(domNode.children)}</p>;
-            }
-            if (domNode.name === 'blockquote') {
-                return <blockquote className="text-justify pl-4 border-l-4 border-gray-500">{domToReact(domNode.children)}</blockquote>;
-            }
-            if (domNode.name === 'li') {
-                return <li className="ml-4 list-disc">{domToReact(domNode.children)}</li>;
-            }
-        }
-    });
-
     return (
-        <div className="nc-PageAbout overflow-hidden relative">
-            {/* ======== BG GLASS ======== */}
-            <BgGlassmorphism />
-
-            <div className="container py-8 lg:py-28 space-y-16 lg:space-y-28">
-                <SectionHero
-                    rightImg={rightImg}
-                    heading={data.title}
-                    btnText=""
-                    subHeading={parsedDescription}
-                />
-                <div className="relative py-1 mt-[-4]">
-                    <div className="text-gray-600">{parsedAdditionalText}</div>
+        <div className="relative">
+            <div
+                className="h-screen bg-fixed bg-center bg-cover flex items-center"
+                style={{ backgroundImage: "url('https://rvdmediagroup.com/wp-content/uploads/2018/01/Roque-Nublo1.jpg')" }}
+            >
+                <div className="absolute inset-0 bg-black opacity-10"></div>
+                <div className="container mx-auto py-8 lg:py-28 space-y-16 lg:space-y-28 bg-white relative z-10 p-8 rounded-2xl" style={{ marginTop: '30vh' }}>
+                    <div className="nc-SectionFounder relative">
+                        <div className="text-gray-500 sm:text-lg dark:text-gray-400">
+                            <h2 className="mb-4 text-4xl tracking-tight font-bold text-gray-900 dark:text-black">
+                                {data.title}
+                            </h2>
+                            {parsedDescription}
+                        </div>
+                    </div>
                 </div>
-                <SectionFounder />
             </div>
         </div>
     );

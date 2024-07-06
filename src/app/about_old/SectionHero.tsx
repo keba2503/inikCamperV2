@@ -1,12 +1,12 @@
 import Image, { StaticImageData } from "next/image";
-import React, { FC, ReactNode } from "react";
+import React, {FC, ReactElement, ReactNode} from "react";
 import ButtonPrimary from "@/shared/ButtonPrimary";
 
 export interface SectionHeroProps {
   className?: string;
   rightImg: StaticImageData;
   heading: ReactNode;
-  subHeading: string;
+  subHeading: string | ReactElement;
   btnText: string;
 }
 
