@@ -19,11 +19,61 @@ import { StarIcon } from "@heroicons/react/24/solid";
 
 const ITEMS_PER_PAGE = 10;
 
+const SkeletonLoader = () => (
+    <div className="nc-SectionClientSay relative">
+        <Heading desc={<div className="flex justify-center"><div className="h-5 w-5 bg-gray-300 rounded-full"></div></div>} isCenter>
+            <div className="h-6 w-48 bg-gray-300 rounded"></div>
+        </Heading>
+        <div className="relative md:mb-16 max-w-2xl mx-auto">
+            <div className="hidden md:block">
+                <div className="absolute top-9 -left-20 h-24 w-24 bg-gray-300 rounded"></div>
+                <div className="absolute bottom-[100px] right-full mr-40 h-24 w-24 bg-gray-300 rounded"></div>
+                <div className="absolute -bottom-20 left-[140px] h-24 w-24 bg-gray-300 rounded"></div>
+                <div className="absolute -bottom-20 right-[140px] h-24 w-24 bg-gray-300 rounded"></div>
+                <div className="absolute left-full ml-32 bottom-[80px] h-24 w-24 bg-gray-300 rounded"></div>
+                <div className="absolute -right-10 top-10 h-24 w-24 bg-gray-300 rounded"></div>
+            </div>
+            <div className="flex justify-center mb-8">
+                <div className="w-24 h-24 bg-gray-300 rounded-full overflow-hidden"></div>
+            </div>
+            <div className={`mt-12 lg:mt-16 relative`}>
+                <div className="opacity-50 md:opacity-100 absolute -mr-16 lg:mr-3 right-full top-1 h-10 w-10 bg-gray-300 rounded"></div>
+                <div className="opacity-50 md:opacity-100 absolute -ml-16 lg:ml-3 left-full top-1 h-10 w-10 bg-gray-300 rounded"></div>
+                <MotionConfig
+                    transition={{
+                        x: { type: "spring", stiffness: 300, damping: 30 },
+                        opacity: { duration: 0.2 },
+                    }}
+                >
+                    <div className="relative w-full overflow-hidden">
+                        <AnimatePresence initial={false}>
+                            <motion.div
+                                key="skeleton"
+                                variants={variants(200, 1)}
+                                initial="enter"
+                                animate="center"
+                                className="flex flex-col items-center text-center w-full"
+                            >
+                                <div className="h-24 w-full bg-gray-300 rounded"></div>
+                                <div className="flex items-center space-x-2 text-lg mt-2 text-neutral-400 pt-10">
+                                    <CalendarIcon className="h-5 w-5" />
+                                    <div className="h-5 w-32 bg-gray-300 rounded"></div>
+                                </div>
+                            </motion.div>
+                        </AnimatePresence>
+                    </div>
+                </MotionConfig>
+            </div>
+        </div>
+    </div>
+);
+
 const SectionClientSay = ({ className = "" }) => {
     const [data, setData] = useState([]);
     const [index, setIndex] = useState(0);
     const [direction, setDirection] = useState(0);
     const [pageIndex, setPageIndex] = useState(0);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -49,6 +99,8 @@ const SectionClientSay = ({ className = "" }) => {
                 }
             } catch (error) {
                 console.error('Error fetching reviews o imágenes:', error);
+            } finally {
+                setLoading(false);
             }
         };
 
@@ -169,7 +221,7 @@ const SectionClientSay = ({ className = "" }) => {
         );
     };
 
-    return (
+    return loading ? <SkeletonLoader /> : (
         <div className={`nc-SectionClientSay relative ${className}`}>
             <Heading desc={renderStars(currentItem?.rating)} isCenter>
                 {currentItem?.username}
