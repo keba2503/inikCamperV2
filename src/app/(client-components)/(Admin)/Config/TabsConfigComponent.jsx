@@ -16,6 +16,7 @@ import SectionOffer from './Forms/SectionOffer';
 import SectionBookingSuccess from './Forms/SectionBookingSuccess';
 import SectionTeam from "./Forms/SectionTeam";
 import SectionValue from "./Forms/SectionValue";
+import SectionBanner from "./Forms/SectionBanner";
 
 const TabsComponent = () => {
   const [scopes, setScopes] = useState([]);
@@ -71,6 +72,7 @@ const TabsComponent = () => {
     2: SectionBookingSuccess,
     11: SectionTeam,
     12: SectionValue,
+    13: SectionBanner,
   };
 
   const ActiveComponent = componentMapping[activeTab] || null;

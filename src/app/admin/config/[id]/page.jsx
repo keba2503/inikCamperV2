@@ -15,6 +15,7 @@ import SectionOffer from '../../../(client-components)/(Admin)/Config/Forms/Sect
 import SectionBookingSuccess from '../../../(client-components)/(Admin)/Config/Forms/SectionBookingSuccess';
 import SectionTeam from "../../../(client-components)/(Admin)/Config/Forms/SectionTeam";
 import SectionValue from "../../../(client-components)/(Admin)/Config/Forms/SectionValue";
+import SectionBanner from "../../../(client-components)/(Admin)/Config/Forms/SectionBanner";
 
 const componentMapping = {
   1: SectionAbout,
@@ -25,6 +26,7 @@ const componentMapping = {
   2: SectionBookingSuccess,
   11: SectionTeam,
   12: SectionValue,
+  13: SectionBanner,
 };
 
 const ConfigIdPage = ({ params }) => {
