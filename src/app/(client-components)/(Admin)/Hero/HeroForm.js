@@ -179,7 +179,7 @@ const HeroForm = ({ hero }) => {
             {isSubmitting ? 'Guardando...' : 'Guardar'}
           </button>
           <Link
-              href="/src/app/(client-components)/(Admin)/hero"
+              href="/admin/hero"
               className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
           >
             Volver

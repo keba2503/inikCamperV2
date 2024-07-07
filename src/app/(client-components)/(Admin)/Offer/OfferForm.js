@@ -33,15 +33,37 @@ const OfferForm = ({ offer }) => {
     if (offer) {
       setTitle(offer.title || '');
       setSubtitle(offer.subtitle || '');
-      setBannerImagePreview(offer.bannerUrl || '');
+
+      if (offer.bannerUrl) {
+        const bannerUrl = `https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/${offer.bannerUrl}.webp`;
+        setBannerImagePreview(bannerUrl);
+      }
+
       setFirstParagraphTitle(offer.firstParagraphTitle || '');
       setFirstParagraphDescription(offer.firstParagraphDescription || '');
-      setFirstParagraphImagePreview1(offer.firstParagraphImageUrl1 || '');
-      setFirstParagraphImagePreview2(offer.firstParagraphImageUrl2 || '');
+
+      if (offer.firstParagraphImageUrl1) {
+        const imageUrl1 = `https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/${offer.firstParagraphImageUrl1}.webp`;
+        setFirstParagraphImagePreview1(imageUrl1);
+      }
+
+      if (offer.firstParagraphImageUrl2) {
+        const imageUrl2 = `https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/${offer.firstParagraphImageUrl2}.webp`;
+        setFirstParagraphImagePreview2(imageUrl2);
+      }
+
       setSecondParagraphTitle(offer.secondParagraphTitle || '');
       setSecondParagraphDescription(offer.secondParagraphDescription || '');
-      setSecondParagraphImagePreview1(offer.secondParagraphImageUrl1 || '');
-      setSecondParagraphImagePreview2(offer.secondParagraphImageUrl2 || '');
+
+      if (offer.secondParagraphImageUrl1) {
+        const imageUrl1 = `https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/${offer.secondParagraphImageUrl1}.webp`;
+        setSecondParagraphImagePreview1(imageUrl1);
+      }
+
+      if (offer.secondParagraphImageUrl2) {
+        const imageUrl2 = `https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/${offer.secondParagraphImageUrl2}.webp`;
+        setSecondParagraphImagePreview2(imageUrl2);
+      }
     }
   }, [offer]);
 
@@ -483,7 +505,7 @@ const OfferForm = ({ offer }) => {
             {isSubmitting ? 'Guardando...' : 'Guardar'}
           </button>
           <Link
-              href="/ruta-de-regreso"
+              href="/admin/offer"
               className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
           >
             Volver
@@ -514,5 +536,3 @@ OfferForm.propTypes = {
 };
 
 export default OfferForm;
-
-

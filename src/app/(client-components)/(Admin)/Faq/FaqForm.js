@@ -96,7 +96,7 @@ const GuideForm = ({ faq }) => {
         </button>
         <Link
           className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-          href="/src/app/(client-components)/(Admin)/faq"
+          href="/admin/faq"
         >
           Volver
         </Link>

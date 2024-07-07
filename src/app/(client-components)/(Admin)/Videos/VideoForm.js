@@ -98,7 +98,7 @@ const VideoForm = ({ video }) => {
                 </button>
                 <Link
                     className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                    href="/src/app/(client-components)/(Admin)/video"
+                    href="/admin/video"
                 >
                     Volver
                 </Link>

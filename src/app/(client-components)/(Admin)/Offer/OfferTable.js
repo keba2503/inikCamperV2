@@ -20,14 +20,14 @@ const OfferTable = () => {
     }
   }, []);
 
-  const handleDelete = async (id, bannerUrl, firstImage, secondImage) => {
+  const handleDelete = async (id, bannerUrl, firstImage, secondImage, secondParagraphImage1, secondParagraphImage2) => {
     const deleteImageFromCloudinary = async (public_id) => {
       try {
         const res = await axios.delete('/api/cloudinaryOffer', {
-        data: { public_id },
-      });
-      if (res.status !== 200) {
-        throw new Error(`Failed to delete image: ${res.data.message}`);
+          data: { public_id },
+        });
+        if (res.status !== 200) {
+          throw new Error(`Failed to delete image: ${res.data.message}`);
         }
       } catch (error) {
         console.error('Error deleting image:', error);
@@ -45,6 +45,14 @@ const OfferTable = () => {
 
       if (secondImage) {
         await deleteImageFromCloudinary(secondImage);
+      }
+
+      if (secondParagraphImage1) {
+        await deleteImageFromCloudinary(secondParagraphImage1);
+      }
+
+      if (secondParagraphImage2) {
+        await deleteImageFromCloudinary(secondParagraphImage2);
       }
 
       // Eliminar oferta de la base de datos
@@ -148,7 +156,7 @@ const OfferTable = () => {
                       Edit
                     </Link>
                     <button
-                        onClick={() => handleDelete(offer.id, offer.bannerUrl, offer.firstParagraphImageUrl1, offer.firstParagraphImageUrl2)}
+                        onClick={() => handleDelete(offer.id, offer.bannerUrl, offer.firstParagraphImageUrl1, offer.firstParagraphImageUrl2, offer.secondParagraphImageUrl1, offer.secondParagraphImageUrl2)}
                         className="text-red-600 hover:text-red-900"
                     >
                       Delete
