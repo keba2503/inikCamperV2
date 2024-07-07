@@ -22,11 +22,11 @@ const links = [
     {name: 'Blog', href: '/admin/blog', icon: BookOpenIcon},
     {name: 'Ofertas', href: '/admin/offer', icon: BookOpenIcon},
     {name: 'Reseñas', href: '/admin/review', icon: StarIcon},
-    {name: 'Gallery', href: '/admin/gallery', icon: PhotoIcon},
+    {name: 'Galeria', href: '/admin/gallery', icon: PhotoIcon},
     {name: 'Galeria en Ofertas', href: '/admin/offerGallery', icon: PhotoIcon},
     {name: 'Imagenes Home', href: '/admin/hero', icon: PhotoIcon},
+    {name: 'Videos', href: '/admin/videos', icon: VideoCameraIcon},
     {name: 'Vista del cliente', href: '/', icon: ArrowLeftOnRectangleIcon},
-    {name: 'Videos', href: '/admin/videos', icon: VideoCameraIcon}
 ];
 
 export default function NavLinks() {

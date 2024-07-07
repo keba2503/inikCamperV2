@@ -7,6 +7,7 @@ import SectionVideos from "@/components/SectionVideos";
 import PageContact from "@/app/contact/page";
 import Services from "@/app/services/Services";
 import OfferBanner from "@/components/OfferBanner";
+import SectionClientSay from "@/components/SectionClientSay";
 
 
 function PageHome3() {
@@ -22,6 +23,7 @@ function PageHome3() {
             <div className="container px-1 sm:px-4 mb-24 ">
                 <h3 className="text-center text-2xl font-bold mb-4">Reserva aquí</h3>
                 <Booking/>
+                <SectionClientSay/>
                 <SectionGridFeaturePlaces cardType="card2"/>
                 <Services/>
                 <SectionVideos/>
