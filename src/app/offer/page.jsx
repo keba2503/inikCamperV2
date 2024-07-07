@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
@@ -7,6 +7,7 @@ import InfoSection from './InfoSection';
 import InfoSectionRight from './InfoSectionRight';
 import OfferGallery from './OfferGallery';
 import ModalButton from './ModalButton';
+import Skeleton from './Skeleton';
 
 const HeroSection = () => {
     const [offer, setOffer] = useState(null);
@@ -34,7 +35,7 @@ const HeroSection = () => {
     }, []);
 
     if (!offer) {
-        return <div>Loading...</div>;
+        return <Skeleton />;
     }
 
     return (

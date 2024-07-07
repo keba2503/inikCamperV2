@@ -28,7 +28,20 @@ const InfoSection = () => {
     }, []);
 
     if (!data) {
-        return <div>Loading...</div>;
+        return (
+            <section className="bg-white dark:bg-gray-900">
+                <div className="gap-16 items-center py-8 px-4 mx-auto max-w-screen-xl lg:grid lg:grid-cols-2 lg:py-16 lg:px-6 animate-pulse">
+                    <div className="font-light text-gray-500 sm:text-lg dark:text-gray-400">
+                        <div className="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white bg-gray-300 dark:bg-gray-700 h-10 rounded"></div>
+                        <div className="mb-4 mt-10 text-justify bg-gray-300 dark:bg-gray-700 h-24 rounded"></div>
+                    </div>
+                    <div className="grid grid-cols-2 gap-4 mt-8">
+                        <div className="relative w-full h-64 bg-gray-300 dark:bg-gray-700 rounded-lg"></div>
+                        <div className="relative w-full h-64 mt-4 lg:mt-10 bg-gray-300 dark:bg-gray-700 rounded-lg"></div>
+                    </div>
+                </div>
+            </section>
+        );
     }
 
     return (

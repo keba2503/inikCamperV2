@@ -28,7 +28,20 @@ const InfoSectionRight = () => {
     }, []);
 
     if (!data) {
-        return <div>Loading...</div>;
+        return (
+            <section className="bg-white dark:bg-gray-900">
+                <div className="gap-16 items-center py-8 px-4 mx-auto max-w-screen-xl lg:grid lg:grid-cols-2 lg:py-16 lg:px-6 animate-pulse">
+                    <div className="order-2 lg:order-1 grid grid-cols-2 gap-4 mt-8 lg:mt-0">
+                        <div className="relative w-full h-64 mb-6 lg:mb-0 bg-gray-300 dark:bg-gray-700 rounded-lg"></div>
+                        <div className="relative w-full h-64 mt-4 lg:mt-10 mb-6 lg:mb-0 bg-gray-300 dark:bg-gray-700 rounded-lg"></div>
+                    </div>
+                    <div className="order-1 lg:order-2 font-light text-gray-500 sm:text-lg dark:text-gray-400 mt-6 lg:mt-0">
+                        <div className="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white bg-gray-300 dark:bg-gray-700 h-10 rounded"></div>
+                        <div className="mt-10 mb-4 text-justify bg-gray-300 dark:bg-gray-700 h-24 rounded"></div>
+                    </div>
+                </div>
+            </section>
+        );
     }
 
     return (

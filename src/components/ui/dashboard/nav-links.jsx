@@ -23,6 +23,7 @@ const links = [
     {name: 'Ofertas', href: '/admin/offer', icon: BookOpenIcon},
     {name: 'Reseñas', href: '/admin/review', icon: StarIcon},
     {name: 'Gallery', href: '/admin/gallery', icon: PhotoIcon},
+    {name: 'Galeria en Ofertas', href: '/admin/offerGallery', icon: PhotoIcon},
     {name: 'Imagenes Home', href: '/admin/hero', icon: PhotoIcon},
     {name: 'Vista del cliente', href: '/', icon: ArrowLeftOnRectangleIcon},
     {name: 'Videos', href: '/admin/videos', icon: VideoCameraIcon}
