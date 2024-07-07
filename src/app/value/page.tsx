@@ -1,40 +1,115 @@
-import React from "react";
+'use client';
+
+import React, {useEffect, useState} from 'react';
+import parse from 'html-react-parser';
+import PropTypes from 'prop-types';
+
+interface ConfigData {
+    id: number;
+    scope_id: number;
+    title: string;
+    subtitle: string;
+    description: string;
+    additional_text: string;
+    updated_at: string;
+}
+
+const Skeleton = () => {
+    return (
+        <div className="animate-pulse flex space-x-4">
+            <div className="flex-1 space-y-4 py-1">
+                <div className="h-4 bg-gray-400 rounded w-3/4"></div>
+                <div className="space-y-2">
+                    <div className="h-4 bg-gray-400 rounded"></div>
+                    <div className="h-4 bg-gray-400 rounded w-5/6"></div>
+                </div>
+            </div>
+        </div>
+    );
+};
 
 const Page = () => {
+    const [data, setData] = useState<ConfigData | null>(null);
+    const [imageUrl, setImageUrl] = useState('');
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await fetch('/api/config');
+                const data: ConfigData[] = await response.json();
+
+                const filteredData = data.find((item: ConfigData) => item.scope_id === 12);
+                if (filteredData) {
+                    setData(filteredData);
+                    if (filteredData.subtitle) {
+                        const imageUrl = `https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/${filteredData.subtitle}.webp`;
+                        setImageUrl(imageUrl);
+                    }
+                }
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchData();
+    }, []);
+
+    if (loading) {
+        return (
+            <div className="relative">
+                <div className="h-screen bg-fixed bg-center bg-cover flex items-center" style={{backgroundImage: "url('https://via.placeholder.com/1500x800')"}}>
+                    <div className="absolute inset-0 bg-black opacity-10"></div>
+                    <div className="container mx-auto py-4 lg:py-16 space-y-10 lg:space-y-16 relative z-10 px-6 sm:px-8 lg:px-16 py-8 lg:rounded-2xl mt-10 lg:mt-32" style={{backgroundColor: 'rgba(255, 255, 255, 0.8)'}}>
+                        <Skeleton/>
+                        <Skeleton/>
+                        <Skeleton/>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
+    if (!data) {
+        return <div>No data found</div>;
+    }
+
     return (
         <div className="relative">
             <div
                 className="h-screen bg-fixed bg-center bg-cover flex items-center"
-                style={{ backgroundImage: "url('https://rvdmediagroup.com/wp-content/uploads/2018/01/Roque-Nublo1.jpg')" }}
+                style={{backgroundImage: `url('${imageUrl}')`}}
             >
                 <div className="absolute inset-0 bg-black opacity-10"></div>
-                <div className="container mx-auto py-4 lg:py-16 space-y-10 lg:space-y-16 relative z-10 px-6 sm:px-8 lg:px-16 py-8 lg:rounded-2xl mt-10 lg:mt-32" style={{ backgroundColor: 'rgba(255, 255, 255, 0.8)' }}>
+                <div className="container mx-auto py-4 lg:py-16 space-y-10 lg:space-y-16 relative z-10 px-6 sm:px-8 lg:px-16 py-8 lg:rounded-2xl mt-10 lg:mt-32" style={{backgroundColor: 'rgba(255, 255, 255, 0.8)'}}>
                     <div className="nc-SectionFounder relative">
                         <div className="text-gray-500 sm:text-lg dark:text-gray-400">
                             <h2 className="mb-4 text-4xl tracking-tight font-bold text-gray-900 dark:text-black">
-                                Nuestros Valores
+                                {data.title}
                             </h2>
-                            <p>Somos INIK, una familia enamorada de viajar a nuestro propio ritmo por cualquier lugar. Esta pasión por la libertad y la aventura nos llevó a crear INIK Camper, un proyecto nacido del corazón y nuestra experiencia viajera. Queremos compartir con ustedes la magia de explorar el mundo a su propio ritmo, especialmente la hermosa isla de Gran Canaria.</p>
-                            <p><br /></p>
-                            <p>En INIK Camper, creemos que cada viaje es una oportunidad para volver a conectar con uno mismo, para descubrir nuevos horizontes y crear recuerdos inolvidables. Nos dedicamos a ayudar a las personas a vivir estas experiencias de una manera única, libre de prisas y lejos de las masas. Queremos que cada rincón descubierto y cada momento vivido se conviertan en parte de su historia personal.</p>
-                            <p><br /></p>
-                            <p>Nuestro deseo es que, al elegirnos, no solo encuentren un vehículo para su viaje, sino también un aliado en su aventura, y que INIK Camper se convierta en parte de sus recuerdos más queridos. Esperamos marcar la diferencia en su experiencia de descubrir Gran Canaria, ofreciéndoles una forma auténtica y personalizada de explorar esta increíble isla.</p>
-                            <br />
-                            <p>
-                                <strong>Misión:&nbsp;</strong>Ofrecer un servicio personalizado y de calidad de experiencias turísticas en camper vans.
-                            </p>
-                            <p>
-                                <strong>Visión:</strong>&nbsp;Conquistar esta rama del turismo en España y Europa con nuestro concepto.
-                            </p>
-                            <p>
-                                <strong>Valores: Transparencia, Calidad de servicio, Trabajo en equipo, Sostenibilidad </strong>
-                            </p>
+                            {parse(data.description || '')}
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     );
+};
+
+Page.propTypes = {
+    data: PropTypes.shape({
+        id: PropTypes.number,
+        scope_id: PropTypes.number,
+        title: PropTypes.string,
+        subtitle: PropTypes.string,
+        description: PropTypes.string,
+        additional_text: PropTypes.string,
+        updated_at: PropTypes.string,
+    }),
+    imageUrl: PropTypes.string,
+    loading: PropTypes.bool,
 };
 
 export default Page;
