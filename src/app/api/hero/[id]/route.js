@@ -52,13 +52,14 @@ export async function GET(request, {params}) {
 
 export async function PUT(request, {params}) {
     const {id} = params;
-    const {title, description, imageUrl} = await request.json();
+    const {title, subtitle, description, imageUrl} = await request.json();
 
     try {
         const hero = await prisma.hero.update({
             where: {id: parseInt(id)},
             data: {
                 title,
+                subtitle,
                 description,
                 imageUrl,
             },

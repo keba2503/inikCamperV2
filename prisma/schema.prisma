@@ -74,9 +74,10 @@ model Video {
 
 model Hero {
   id          Int      @id @default(autoincrement())
-  title       String
-  description String
-  imageUrl    String
+  title       String   @db.Text
+  subtitle    String?   @db.Text
+  description String   @db.Text
+  imageUrl    String   @db.Text
 }
 
 model Review {

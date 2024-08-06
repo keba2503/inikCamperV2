@@ -13,6 +13,7 @@ const RichTextEditor = dynamic(() => import('@/components/RichTextEditor'), {
 
 const HeroForm = ({ hero, onClose }) => {
   const [title, setTitle] = useState('');
+  const [subtitle, setSubtitle] = useState('');
   const [description, setDescription] = useState('');
   const [coverImage, setCoverImage] = useState(null);
   const [coverImagePreview, setCoverImagePreview] = useState('');
@@ -22,6 +23,7 @@ const HeroForm = ({ hero, onClose }) => {
   useEffect(() => {
     if (hero) {
       setTitle(hero.title || '');
+      setSubtitle(hero.subtitle || '');
       setDescription(hero.description || '');
       if (hero.imageUrl) {
         const imageUrl = `https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/${hero.imageUrl}.webp`;
@@ -88,6 +90,7 @@ const HeroForm = ({ hero, onClose }) => {
 
     const heroData = {
       title,
+      subtitle,
       description,
       imageUrl,
     };
@@ -107,6 +110,7 @@ const HeroForm = ({ hero, onClose }) => {
         setTimeout(() => setSuccessMessage(''), 3000); // Remove success message after 3 seconds
         if (!hero) {
           setTitle('');
+          setSubtitle('');
           setDescription('');
           setCoverImage(null);
           setCoverImagePreview('');
@@ -133,6 +137,18 @@ const HeroForm = ({ hero, onClose }) => {
               id="title-input"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
+              className="block w-full p-4 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          />
+        </div>
+        <div className="mb-5">
+          <label htmlFor="subtitle-input" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+            Subtítulo
+          </label>
+          <input
+              type="text"
+              id="subtitle-input"
+              value={subtitle}
+              onChange={(e) => setSubtitle(e.target.value)}
               className="block w-full p-4 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           />
         </div>
@@ -209,6 +225,7 @@ HeroForm.propTypes = {
   hero: PropTypes.shape({
     id: PropTypes.number,
     title: PropTypes.string,
+    subtitle: PropTypes.string,
     description: PropTypes.string,
     imageUrl: PropTypes.string,
   }),
