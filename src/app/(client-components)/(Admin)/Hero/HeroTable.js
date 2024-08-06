@@ -42,7 +42,6 @@ const HeroTable = () => {
                 await deleteImageFromCloudinary(imageUrl);
             }
 
-            // Eliminar hero de la base de datos
             const response = await fetch(`/api/hero/${id}`, {
                 method: 'DELETE',
             });
@@ -69,7 +68,6 @@ const HeroTable = () => {
     return (
         <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
             <div className="flex justify-between p-2">
-                <h2 className="text-lg font-medium text-gray-900">Heroes</h2>
                 <button
                     onClick={fetchHeroes}
                     className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"

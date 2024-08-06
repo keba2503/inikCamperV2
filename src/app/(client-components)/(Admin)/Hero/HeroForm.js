@@ -2,16 +2,16 @@
 
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import axios from 'axios';
 import Image from 'next/image';
+import Link from "next/link";
 
 const RichTextEditor = dynamic(() => import('@/components/RichTextEditor'), {
   ssr: false,
 });
 
-const HeroForm = ({ hero }) => {
+const HeroForm = ({ hero, onClose }) => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [coverImage, setCoverImage] = useState(null);
@@ -58,7 +58,7 @@ const HeroForm = ({ hero }) => {
       try {
         const res = await axios.post(
             `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload`,
-            formData,
+            formData
         );
         return res.data.public_id;
       } catch (error) {
@@ -104,12 +104,14 @@ const HeroForm = ({ hero }) => {
       if (response.ok) {
         await response.json();
         setSuccessMessage('¡Hero guardado correctamente!');
+        setTimeout(() => setSuccessMessage(''), 3000); // Remove success message after 3 seconds
         if (!hero) {
           setTitle('');
           setDescription('');
           setCoverImage(null);
           setCoverImagePreview('');
         }
+        onClose(); // Close the form after successful submission
       } else {
         console.error('Error saving hero:', response.statusText);
       }
@@ -153,7 +155,8 @@ const HeroForm = ({ hero }) => {
             />
             <label
                 htmlFor="cover-image-input"
-                className="cursor-pointer bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                className={`cursor-pointer ${isSubmitting ? 'bg-gray-400' : 'bg-blue-500 hover:bg-blue-700'} text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline`}
+                disabled={isSubmitting}
             >
               {hero && hero.imageUrl ? 'Editar imagen' : 'Seleccionar imagen'}
             </label>
@@ -173,17 +176,27 @@ const HeroForm = ({ hero }) => {
         <div className="flex items-center justify-between">
           <button
               type="submit"
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              className={`font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline ${isSubmitting ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-500 hover:bg-blue-700 text-white'}`}
               disabled={isSubmitting}
           >
             {isSubmitting ? 'Guardando...' : 'Guardar'}
           </button>
-          <Link
-              href="/admin/hero"
-              className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-          >
-            Volver
-          </Link>
+          {hero ? (
+              <Link
+                  href="/admin/hero"
+                  className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              >
+                Volver
+              </Link>
+          ) : (
+              <button
+                  type="button"
+                  onClick={onClose}
+                  className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              >
+                Cancelar
+              </button>
+          )}
         </div>
         {successMessage && (
             <div className="mt-4 text-green-500">{successMessage}</div>
@@ -199,6 +212,7 @@ HeroForm.propTypes = {
     description: PropTypes.string,
     imageUrl: PropTypes.string,
   }),
+  onClose: PropTypes.func.isRequired,
 };
 
 export default HeroForm;
