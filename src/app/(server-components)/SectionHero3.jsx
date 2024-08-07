@@ -1,15 +1,14 @@
 'use client';
 
-import React, {useState, useEffect} from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import ButtonPrimary from "@/shared/ButtonPrimary";
 import ModalWithTabs from "@/app/(client-components)/(Hero)/ModalWithTabs";
 import axios from 'axios';
 import parse from 'html-react-parser';
 import SkeletonSectionHero3 from '@/components/SkeletonSectionHero3';
-import superhost from '@/images/superhost.png';
 
-const SectionHero3 = ({className = ''}) => {
+const SectionHero3 = ({ className = '' }) => {
     const [showModal, setShowModal] = useState(false);
     const [heroes, setHeroes] = useState([]);
     const [currentHeroIndex, setCurrentHeroIndex] = useState(0);
@@ -73,44 +72,29 @@ const SectionHero3 = ({className = ''}) => {
     };
 
     if (isLoading) {
-        return <SkeletonSectionHero3/>;
+        return <SkeletonSectionHero3 />;
     }
 
     return (
         <div className={`nc-SectionHero3 relative ${className}`} data-nc-id="SectionHero3">
             {currentHero && (
                 <>
-                    <div className="absolute inset-0 bg-gradient-to-b from-black/60 to-transparent z-10"></div>
-                    {/* Overlay */}
-                    <div className="absolute z-20 inset-x-0 top-[10%] sm:top-[15%] text-center flex flex-col items-center max-w-2xl mx-auto space-y-4 lg:space-y-5 xl:space-y-8">
-                        <span className="sm:text-lg md:text-xl font-semibold text-white"> {/* Adjusted text color */}
-                            {parse(currentHero.title)}
+                    {/* Text Content */}
+                    <div className="absolute z-20 inset-x-0 top-[10%] sm:top-[15%] flex flex-col items-start p-5 sm:p-10 text-left">
+                        <span className="sm:text-lg md:text-3xl text-black">
+                            {currentHero.title && typeof currentHero.title === 'string' && parse(currentHero.title)}
                         </span>
-                        <h2 className="font-bold text-white text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl !leading-[115%]"> {/* Adjusted text color */}
-                            {parse(currentHero.description)}
+                        <div className="mt-4 sm:mt-6"/>
+                        <div className="mt-4 sm:mt-6"/>
+                        <h2 className="font-bold text-black text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl !leading-[120%] max-w-5xl">
+                            {currentHero.subtitle && typeof currentHero.subtitle === 'string' && parse(currentHero.subtitle)}
                         </h2>
+                        <div className="mt-4 sm:mt-10"/>
+                        <p className="sm:text-lg md:text-2xl text-black max-w-4xl text-justify">
+                            {currentHero.description && typeof currentHero.description === 'string' && parse(currentHero.description)}
+                        </p>
                     </div>
-                    <div>
-                        <div className="absolute top-4 left-4 z-30  sm:hidden">
-                            <Image
-                                src={superhost}
-                                alt="Superhost Badge"
-                                width={60}
-                                height={60}
-                            />
-                        </div>
-
-                        <div className="absolute top-4 left-4 z-30 hidden sm:block">
-                            <Image
-                                src={superhost}
-                                alt="Superhost Badge"
-                                width={180}
-                                height={150}
-                            />
-                        </div>
-                    </div>
-
-
+                    {/* Image Content */}
                     <div
                         className="relative w-full aspect-w-1 aspect-h-1 sm:aspect-w-4 sm:aspect-h-3 lg:aspect-w-16 lg:aspect-h-9 xl:aspect-h-8"
                         id="default-carousel"
@@ -137,22 +121,19 @@ const SectionHero3 = ({className = ''}) => {
                             </div>
                         ))}
                     </div>
-                    <div className="absolute bottom-10 w-full flex justify-center z-20"> {/* Added z-index */}
-                        <ButtonPrimary
-                            fontSize="text-sm sm:text-base lg:text-lg font-medium"
-                            onClick={() => setShowModal(true)}
-                        >
-                            Disponibilidad
-                        </ButtonPrimary>
-                    </div>
                 </>
             )}
-            {
-                showModal && <ModalWithTabs onClose={() => setShowModal(false)}/>
-            }
+            <div className="absolute bottom-10 w-full flex justify-center z-20"> {/* Added z-index */}
+                <ButtonPrimary
+                    fontSize="text-sm sm:text-base lg:text-lg font-medium"
+                    onClick={() => setShowModal(true)}
+                >
+                    Disponibilidad
+                </ButtonPrimary>
+            </div>
+            {showModal && <ModalWithTabs onClose={() => setShowModal(false)} />}
         </div>
-    )
-        ;
+    );
 };
 
 export default SectionHero3;
