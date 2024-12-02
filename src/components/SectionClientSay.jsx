@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
 import Heading from "@/shared/Heading";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import quotationImg from "@/images/quotation.png";
 import quotationImg2 from "@/images/quotation2.png";
 import clientSay1 from "@/images/clientSay1.png";
@@ -16,6 +16,8 @@ import Image from "next/image";
 import { useSwipeable } from "react-swipeable";
 import { variants } from "@/utils/animationVariants";
 import { StarIcon } from "@heroicons/react/24/solid";
+import { LanguageContext } from "@/context/LanguageContext";
+import { translateText } from "@/utils/translate";
 
 const ITEMS_PER_PAGE = 10;
 
@@ -24,47 +26,6 @@ const SkeletonLoader = () => (
         <Heading desc={<div className="flex justify-center"><div className="h-5 w-5 bg-gray-300 rounded-full"></div></div>} isCenter>
             <div className="h-6 w-48 bg-gray-300 rounded"></div>
         </Heading>
-        <div className="relative md:mb-16 max-w-2xl mx-auto">
-            <div className="hidden md:block">
-                <div className="absolute top-9 -left-20 h-24 w-24 bg-gray-300 rounded"></div>
-                <div className="absolute bottom-[100px] right-full mr-40 h-24 w-24 bg-gray-300 rounded"></div>
-                <div className="absolute -bottom-20 left-[140px] h-24 w-24 bg-gray-300 rounded"></div>
-                <div className="absolute -bottom-20 right-[140px] h-24 w-24 bg-gray-300 rounded"></div>
-                <div className="absolute left-full ml-32 bottom-[80px] h-24 w-24 bg-gray-300 rounded"></div>
-                <div className="absolute -right-10 top-10 h-24 w-24 bg-gray-300 rounded"></div>
-            </div>
-            <div className="flex justify-center mb-8">
-                <div className="w-24 h-24 bg-gray-300 rounded-full overflow-hidden"></div>
-            </div>
-            <div className={`mt-12 lg:mt-16 relative`}>
-                <div className="opacity-50 md:opacity-100 absolute -mr-16 lg:mr-3 right-full top-1 h-10 w-10 bg-gray-300 rounded"></div>
-                <div className="opacity-50 md:opacity-100 absolute -ml-16 lg:ml-3 left-full top-1 h-10 w-10 bg-gray-300 rounded"></div>
-                <MotionConfig
-                    transition={{
-                        x: { type: "spring", stiffness: 300, damping: 30 },
-                        opacity: { duration: 0.2 },
-                    }}
-                >
-                    <div className="relative w-full overflow-hidden">
-                        <AnimatePresence initial={false}>
-                            <motion.div
-                                key="skeleton"
-                                variants={variants(200, 1)}
-                                initial="enter"
-                                animate="center"
-                                className="flex flex-col items-center text-center w-full"
-                            >
-                                <div className="h-24 w-full bg-gray-300 rounded"></div>
-                                <div className="flex items-center space-x-2 text-lg mt-2 text-neutral-400 pt-10">
-                                    <CalendarIcon className="h-5 w-5" />
-                                    <div className="h-5 w-32 bg-gray-300 rounded"></div>
-                                </div>
-                            </motion.div>
-                        </AnimatePresence>
-                    </div>
-                </MotionConfig>
-            </div>
-        </div>
     </div>
 );
 
@@ -74,6 +35,18 @@ const SectionClientSay = ({ className = "" }) => {
     const [direction, setDirection] = useState(0);
     const [pageIndex, setPageIndex] = useState(0);
     const [loading, setLoading] = useState(true);
+    const [staticTexts, setStaticTexts] = useState({
+        clientAvatar: "Client Avatar",
+        product: "Product",
+    });
+
+    const context = useContext(LanguageContext);
+
+    if (!context) {
+        throw new Error("LanguageContext must be used within a LanguageProvider");
+    }
+
+    const { language } = context;
 
     useEffect(() => {
         const fetchData = async () => {
@@ -85,95 +58,64 @@ const SectionClientSay = ({ className = "" }) => {
                     const reviews = await reviewResponse.json();
                     const images = await imageResponse.json();
 
-                    const formattedData = reviews.map(review => {
-                        const image = images.find(img => img.id === review.avatarUrl);
-                        return {
-                            ...review,
-                            avatarUrl: image ? image.url : '',
-                        };
-                    });
+                    const formattedData = await Promise.all(
+                        reviews.map(async (review) => {
+                            const image = images.find(img => img.id === review.avatarUrl);
+
+                            // Traducción dinámica de comentarios
+                            const translatedComment = await translateText(review.comment, language);
+
+                            return {
+                                ...review,
+                                avatarUrl: image ? image.url : '',
+                                comment: translatedComment,
+                            };
+                        })
+                    );
 
                     setData(formattedData);
                 } else {
                     console.error('Error fetching reviews or images');
                 }
             } catch (error) {
-                console.error('Error fetching reviews o imágenes:', error);
+                console.error('Error fetching reviews or images:', error);
             } finally {
                 setLoading(false);
             }
         };
 
         fetchData();
-    }, []);
+    }, [language]);
 
-    function changeItemId(newVal) {
-        if (newVal > index) {
-            setDirection(1);
-        } else {
-            setDirection(-1);
-        }
-        setIndex(newVal);
-    }
+    useEffect(() => {
+        const translateStaticTexts = async () => {
+            const translatedClientAvatar = await translateText("Client Avatar", language);
+            const translatedProduct = await translateText("Product", language);
 
-    function changePage(newPageIndex) {
-        if (newPageIndex >= 0 && newPageIndex < Math.ceil(data.length / ITEMS_PER_PAGE)) {
-            setPageIndex(newPageIndex);
-        }
-    }
+            setStaticTexts({
+                clientAvatar: translatedClientAvatar,
+                product: translatedProduct,
+            });
+        };
+
+        translateStaticTexts();
+    }, [language]);
 
     const handlers = useSwipeable({
         onSwipedLeft: () => {
-            if (index < data?.length - 1) {
-                changeItemId(index + 1);
+            if (index < data.length - 1) {
+                setDirection(1);
+                setIndex(index + 1);
             }
         },
         onSwipedRight: () => {
             if (index > 0) {
-                changeItemId(index - 1);
+                setDirection(-1);
+                setIndex(index - 1);
             }
         },
         trackMouse: true,
     });
-
-    let currentItem = data[index];
-
-    const renderBg = () => {
-        return (
-            <div className="hidden md:block">
-                <Image
-                    className="absolute top-9 -left-20"
-                    src={clientSay1}
-                    alt="client 1"
-                />
-                <Image
-                    className="absolute bottom-[100px] right-full mr-40"
-                    src={clientSay2}
-                    alt="client 2"
-                />
-                <Image
-                    className="absolute -bottom-20 left-[140px]"
-                    src={clientSay3}
-                    alt="client 3"
-                />
-                <Image
-                    className="absolute -bottom-20 right-[140px]"
-                    src={clientSay4}
-                    alt="client 4"
-                />
-                <Image
-                    className="absolute left-full ml-32 bottom-[80px]"
-                    src={clientSay5}
-                    alt="client 5"
-                />
-                <Image
-                    className="absolute -right-10 top-10"
-                    src={clientSay6}
-                    alt="client 6"
-                />
-            </div>
-        );
-    };
 
     const renderStars = (rating) => {
         return (
@@ -197,17 +139,17 @@ const SectionClientSay = ({ className = "" }) => {
         return (
             <div className="mt-10 flex items-center justify-center space-x-2">
                 {pageIndex > 0 && (
-                    <button onClick={() => changePage(pageIndex - 1)}>&lt;</button>
+                    <button onClick={() => setPageIndex(pageIndex - 1)}>&lt;</button>
                 )}
                 {pageData.map((item, i) => (
                     <button
                         className={`w-8 h-8 rounded-full overflow-hidden border-2 ${start + i === index ? "border-black/70" : "border-transparent"}`}
-                        onClick={() => changeItemId(start + i)}
+                        onClick={() => setIndex(start + i)}
                         key={start + i}
                     >
                         <Image
                             src={item.avatarUrl || ''}
-                            alt="Client Avatar"
+                            alt={staticTexts.clientAvatar}
                             width={32}
                             height={32}
                             className="object-cover w-full h-full"
@@ -215,7 +157,7 @@ const SectionClientSay = ({ className = "" }) => {
                     </button>
                 ))}
                 {pageIndex < totalPages - 1 && (
-                    <button onClick={() => changePage(pageIndex + 1)}>&gt;</button>
+                    <button onClick={() => setPageIndex(pageIndex + 1)}>&gt;</button>
                 )}
             </div>
         );
@@ -223,17 +165,16 @@ const SectionClientSay = ({ className = "" }) => {
 
     return loading ? <SkeletonLoader /> : (
         <div className={`nc-SectionClientSay relative ${className}`}>
-            <Heading desc={renderStars(currentItem?.rating)} isCenter>
-                {currentItem?.username}
+            <Heading desc={renderStars(data[index]?.rating)} isCenter>
+                {data[index]?.username}
             </Heading>
             <div className="relative md:mb-16 max-w-2xl mx-auto">
-                {renderBg()}
                 <div className="flex justify-center mb-8">
                     <div className="w-24 h-24 rounded-full overflow-hidden">
                         <Image
                             className="object-cover w-full h-full"
-                            src={currentItem?.avatarUrl || ''}
-                            alt="Client Avatar"
+                            src={data[index]?.avatarUrl || ''}
+                            alt={staticTexts.clientAvatar}
                             width={100}
                             height={100}
                         />
@@ -268,12 +209,12 @@ const SectionClientSay = ({ className = "" }) => {
                                     className="flex flex-col items-center text-center w-full"
                                 >
                                     <>
-                    <span className="block text-center w-full">
-                      <div dangerouslySetInnerHTML={{ __html: currentItem?.comment }} />
-                    </span>
+                                        <span className="block text-center w-full">
+                                            <div dangerouslySetInnerHTML={{ __html: data[index]?.comment }} />
+                                        </span>
                                         <div className="flex items-center space-x-2 text-lg mt-2 text-neutral-400 pt-10">
                                             <CalendarIcon className="h-5 w-5" />
-                                            <span>{currentItem?.product}</span>
+                                            <span>{`${staticTexts.product}: ${data[index]?.product}`}</span>
                                         </div>
                                     </>
                                 </motion.div>

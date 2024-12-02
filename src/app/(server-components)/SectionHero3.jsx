@@ -1,33 +1,72 @@
 'use client';
 
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState, useContext} from "react";
 import Image from "next/image";
 import ButtonPrimary from "@/shared/ButtonPrimary";
 import ModalWithTabs from "@/app/(client-components)/(Hero)/ModalWithTabs";
 import axios from 'axios';
 import parse from 'html-react-parser';
 import SkeletonSectionHero3 from '@/components/SkeletonSectionHero3';
+import {LanguageContext} from "@/context/LanguageContext";
+import {translateText} from "@/utils/translate";
 
-const SectionHero3 = ({ className = '' }) => {
+const SectionHero3 = ({className = ''}) => {
     const [showModal, setShowModal] = useState(false);
     const [heroes, setHeroes] = useState([]);
     const [currentHeroIndex, setCurrentHeroIndex] = useState(0);
     const [touchStartX, setTouchStartX] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
+    const [buttonText, setButtonText] = useState("Disponibilidad");
+
+    const context = useContext(LanguageContext);
+
+    if (!context) {
+        throw new Error("LanguageContext must be used within a LanguageProvider");
+    }
+
+    const {language} = context;
+
+    useEffect(() => {
+        const translateButtonText = async () => {
+            const translatedText = await translateText("Disponibilidad", language);
+            setButtonText(translatedText);
+        };
+
+        translateButtonText();
+    }, [language]);
 
     useEffect(() => {
         const fetchHeroes = async () => {
             try {
                 const response = await axios.get('/api/hero');
-                setHeroes(response.data);
+                const heroData = response.data;
+
+                // Translate hero content based on the current language
+                const translatedHeroes = await Promise.all(
+                    heroData.map(async (hero) => {
+                        const translatedTitle = await translateText(hero.title, language);
+                        const translatedSubtitle = await translateText(hero.subtitle, language);
+                        const translatedDescription = await translateText(hero.description, language);
+
+                        return {
+                            ...hero,
+                            title: translatedTitle,
+                            subtitle: translatedSubtitle,
+                            description: translatedDescription,
+                        };
+                    })
+                );
+
+                setHeroes(translatedHeroes);
                 setIsLoading(false);
             } catch (error) {
-                console.error('Error fetching heroes:', error);
+                console.error("Error fetching heroes:", error);
                 setIsLoading(false);
             }
         };
+
         fetchHeroes();
-    }, []);
+    }, [language]);
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -43,8 +82,6 @@ const SectionHero3 = ({ className = '' }) => {
     const prevHero = () => {
         setCurrentHeroIndex((prevIndex) => (prevIndex - 1 + heroes.length) % heroes.length);
     };
-
-    const currentHero = heroes[currentHeroIndex];
 
     const handleTouchStart = (e) => {
         const touch = e.touches[0];
@@ -71,8 +108,10 @@ const SectionHero3 = ({ className = '' }) => {
         nextHero();
     };
 
+    const currentHero = heroes[currentHeroIndex];
+
     if (isLoading) {
-        return <SkeletonSectionHero3 />;
+        return <SkeletonSectionHero3/>;
     }
 
     return (
@@ -80,11 +119,11 @@ const SectionHero3 = ({ className = '' }) => {
             {currentHero && (
                 <>
                     {/* Text Content */}
-                    <div className="absolute z-20 inset-x-0 top-[10%] sm:top-[15%] flex flex-col items-start p-5 sm:p-10 text-left">
+                    <div
+                        className="absolute z-20 inset-x-0 top-[10%] sm:top-[15%] flex flex-col items-start p-5 sm:p-10 text-left">
                         <span className="sm:text-lg md:text-3xl text-black">
                             {currentHero.title && typeof currentHero.title === 'string' && parse(currentHero.title)}
                         </span>
-                        <div className="mt-4 sm:mt-6"/>
                         <div className="mt-4 sm:mt-6"/>
                         <h2 className="font-bold text-black text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl !leading-[120%] max-w-5xl">
                             {currentHero.subtitle && typeof currentHero.subtitle === 'string' && parse(currentHero.subtitle)}
@@ -123,15 +162,15 @@ const SectionHero3 = ({ className = '' }) => {
                     </div>
                 </>
             )}
-            <div className="absolute bottom-10 w-full flex justify-center z-20"> {/* Added z-index */}
+            <div className={`absolute bottom-10 w-full flex justify-center z-20 ${className}`}>
                 <ButtonPrimary
                     fontSize="text-sm sm:text-base lg:text-lg font-medium"
                     onClick={() => setShowModal(true)}
                 >
-                    Disponibilidad
+                    {buttonText}
                 </ButtonPrimary>
             </div>
-            {showModal && <ModalWithTabs onClose={() => setShowModal(false)} />}
+            {showModal && <ModalWithTabs onClose={() => setShowModal(false)}/>}
         </div>
     );
 };
