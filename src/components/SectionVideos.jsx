@@ -1,6 +1,6 @@
 'use client';
 
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Heading from "@/shared/Heading";
 import NcPlayIcon from "@/shared/NcPlayIcon";
 import NcPlayIcon2 from "@/shared/NcPlayIcon2";
@@ -8,6 +8,8 @@ import Image from "next/image";
 import PropTypes from 'prop-types';
 import Link from 'next/link';
 import ButtonPrimary from "@/shared/ButtonPrimary";
+import { LanguageContext } from "@/context/LanguageContext";
+import { translateText } from "@/utils/translate";
 
 const extractVideoId = (url) => {
     const regex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:shorts\/|watch\?v=|embed\/|v\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
@@ -20,10 +22,21 @@ const getThumbnailUrl = (url) => {
     return videoId ? `https://img.youtube.com/vi/${videoId}/hqdefault.jpg` : url;
 };
 
-const SectionVideos = ({className = ""}) => {
+const SectionVideos = ({ className = "" }) => {
     const [videos, setVideos] = useState([]);
     const [isPlay, setIsPlay] = useState(false);
     const [currentVideo, setCurrentVideo] = useState(0);
+    const [translatedHeading, setTranslatedHeading] = useState("");
+    const [translatedDesc, setTranslatedDesc] = useState("");
+    const [translatedButton, setTranslatedButton] = useState("");
+
+    const context = useContext(LanguageContext);
+
+    if (!context) {
+        throw new Error('LanguageContext must be used within a LanguageProvider');
+    }
+
+    const { language } = context;
 
     useEffect(() => {
         const fetchVideos = async () => {
@@ -40,8 +53,25 @@ const SectionVideos = ({className = ""}) => {
             }
         };
 
+        const translateStaticContent = async () => {
+            try {
+                const buttonText = await translateText("Ver más videos", language);
+                const heading = await translateText("🎬 Nuestros videos", language);
+                const description = await translateText(
+                    "Descubre nuestros videos más populares. ¡Todos son bienvenidos!",
+                    language
+                );
+                setTranslatedHeading(heading);
+                setTranslatedDesc(description);
+                setTranslatedButton(buttonText);
+            } catch (error) {
+                console.error('Error translating static text:', error);
+            }
+        };
+
         fetchVideos();
-    }, []);
+        translateStaticContent();
+    }, [language]);
 
     const renderMainVideo = () => {
         if (videos.length === 0) return null;
@@ -65,7 +95,7 @@ const SectionVideos = ({className = ""}) => {
                             onClick={() => setIsPlay(true)}
                             className="cursor-pointer absolute inset-0 flex items-center justify-center z-10"
                         >
-                            <NcPlayIcon/>
+                            <NcPlayIcon />
                         </div>
 
                         <Image
@@ -97,7 +127,7 @@ const SectionVideos = ({className = ""}) => {
                 key={String(index)}
             >
                 <div className="absolute inset-0 flex items-center justify-center z-10">
-                    <NcPlayIcon2/>
+                    <NcPlayIcon2 />
                 </div>
                 <Image
                     fill
@@ -114,15 +144,14 @@ const SectionVideos = ({className = ""}) => {
     };
 
     return (
-        <div className={`nc-SectionVideos ${className} my-28`} >
-            <Heading
-                desc="Descubre nuestros videos más populares. ¡Todos son bienvenidos!"
-            >
-                🎬 Nuestros videos
+        <div className={`nc-SectionVideos ${className} my-28`}>
+            <Heading desc={translatedDesc}>
+                {translatedHeading}
             </Heading>
 
             <div className="flex flex-col relative sm:pr-4 sm:py-4 md:pr-6 md:py-6 xl:pr-14 xl:py-14 lg:flex-row">
-                <div className="absolute -top-4 -bottom-4 -right-4 w-2/3 rounded-2xl bg-primary-100 bg-opacity-40 z-0 sm:rounded-[50px] md:top-0 md:bottom-0 md:right-0 xl:w-1/2 dark:bg-neutral-800 dark:bg-opacity-40"></div>
+                <div
+                    className="absolute -top-4 -bottom-4 -right-4 w-2/3 rounded-2xl bg-primary-100 bg-opacity-40 z-0 sm:rounded-[50px] md:top-0 md:bottom-0 md:right-0 xl:w-1/2 dark:bg-neutral-800 dark:bg-opacity-40"></div>
                 <div className="flex-grow relative pb-2 sm:pb-4 lg:pb-0 lg:pr-5 xl:pr-6">
                     {renderMainVideo()}
                 </div>
@@ -136,7 +165,7 @@ const SectionVideos = ({className = ""}) => {
                         as="a"
                         fontSize="text-sm sm:text-base lg:text-lg font-medium"
                     >
-                        Ver más videos
+                        {translatedButton}
                     </ButtonPrimary>
                 </Link>
             </div>
