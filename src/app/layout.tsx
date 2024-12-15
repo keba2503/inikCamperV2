@@ -8,6 +8,7 @@ import {Metadata} from 'next';
 import ClientWrapper from '../components/ClientWrapper';
 import React from 'react';
 import {LanguageProvider} from '@/context/LanguageContext';
+import WhatsAppButton from '../components/WhatsAppButton';
 
 export const metadata: Metadata = {
     title: 'InikCamper - Booking CamperVan',
@@ -27,6 +28,7 @@ export default function RootLayout({
             <ClientCommons/>
             <ClientWrapper>{children}</ClientWrapper>
             <Footer/>
+            <WhatsAppButton/>
         </LanguageProvider>
         </body>
         </html>
